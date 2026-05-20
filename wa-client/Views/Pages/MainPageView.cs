@@ -99,15 +99,6 @@ namespace wa_client.Views.Pages
             }
         }
 
-        private void dgvService_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (dgvService.Columns[e.ColumnIndex].DataPropertyName == "IsActive" && e.Value is bool active)
-            {
-                e.Value = active ? "Active" : "Inactive";
-                e.FormattingApplied = true;
-            }
-        }
-
         private void dgvCompany_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;

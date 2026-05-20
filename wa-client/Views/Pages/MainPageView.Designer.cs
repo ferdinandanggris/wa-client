@@ -378,7 +378,7 @@ namespace wa_client.Views.Pages
             this.dgvService.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvService.Size = new System.Drawing.Size(794, 503);
             this.dgvService.TabIndex = 0;
-            this.dgvService.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvService_CellFormatting);
+
             // 
             // panelServiceFooter
             // 
