@@ -48,6 +48,8 @@ namespace wa_client.Views.Pages
             this.inboxPage = new System.Windows.Forms.TabPage();
             this.outboxPage = new System.Windows.Forms.TabPage();
             this.tabLog = new System.Windows.Forms.TabPage();
+            this.tabDashboard = new System.Windows.Forms.TabPage();
+            this.tabAnalytics = new System.Windows.Forms.TabPage();
             this.panelTop.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabCompany.SuspendLayout();
@@ -64,6 +66,8 @@ namespace wa_client.Views.Pages
             this.panelServiceFooter.SuspendLayout();
             this.tabMonitor.SuspendLayout();
             this.tabControl2.SuspendLayout();
+            this.tabDashboard.SuspendLayout();
+            this.tabAnalytics.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
@@ -129,11 +133,13 @@ namespace wa_client.Views.Pages
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabDashboard);
             this.tabControl1.Controls.Add(this.tabCompany);
             this.tabControl1.Controls.Add(this.tabUser);
             this.tabControl1.Controls.Add(this.tabService);
             this.tabControl1.Controls.Add(this.tabMonitor);
             this.tabControl1.Controls.Add(this.tabLog);
+            this.tabControl1.Controls.Add(this.tabAnalytics);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.tabControl1.Location = new System.Drawing.Point(0, 35);
@@ -193,42 +199,37 @@ namespace wa_client.Views.Pages
             // btnCompanySave
             // 
             this.btnCompanySave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCompanySave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.btnCompanySave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCompanySave.ForeColor = System.Drawing.Color.White;
             this.btnCompanySave.Location = new System.Drawing.Point(700, 10);
             this.btnCompanySave.Name = "btnCompanySave";
-            this.btnCompanySave.Size = new System.Drawing.Size(90, 30);
+            this.btnCompanySave.Size = new System.Drawing.Size(75, 23);
             this.btnCompanySave.TabIndex = 1;
+            this.btnCompanySave.Tag = "1";
             this.btnCompanySave.Text = "Simpan";
-            this.btnCompanySave.UseVisualStyleBackColor = false;
+            this.btnCompanySave.UseVisualStyleBackColor = true;
             this.btnCompanySave.Click += new System.EventHandler(this.btnCompanySave_Click);
             // 
             // btnCompanyRefresh
             // 
             this.btnCompanyRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCompanyRefresh.BackColor = System.Drawing.Color.White;
-            this.btnCompanyRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCompanyRefresh.Location = new System.Drawing.Point(600, 10);
             this.btnCompanyRefresh.Name = "btnCompanyRefresh";
-            this.btnCompanyRefresh.Size = new System.Drawing.Size(90, 30);
+            this.btnCompanyRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnCompanyRefresh.TabIndex = 2;
+            this.btnCompanyRefresh.Tag = "2";
             this.btnCompanyRefresh.Text = "F5 - Refresh";
-            this.btnCompanyRefresh.UseVisualStyleBackColor = false;
+            this.btnCompanyRefresh.UseVisualStyleBackColor = true;
             this.btnCompanyRefresh.Click += new System.EventHandler(this.btnCompanyRefresh_Click);
             // 
             // btnCompanyAdd
             // 
             this.btnCompanyAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCompanyAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
-            this.btnCompanyAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCompanyAdd.ForeColor = System.Drawing.Color.White;
             this.btnCompanyAdd.Location = new System.Drawing.Point(10, 10);
             this.btnCompanyAdd.Name = "btnCompanyAdd";
-            this.btnCompanyAdd.Size = new System.Drawing.Size(90, 30);
+            this.btnCompanyAdd.Size = new System.Drawing.Size(75, 23);
             this.btnCompanyAdd.TabIndex = 0;
+            this.btnCompanyAdd.Tag = "3";
             this.btnCompanyAdd.Text = "+ Tambah";
-            this.btnCompanyAdd.UseVisualStyleBackColor = false;
+            this.btnCompanyAdd.UseVisualStyleBackColor = true;
             this.btnCompanyAdd.Click += new System.EventHandler(this.btnCompanyAdd_Click);
             // 
             // lblCompanyTitle
@@ -295,42 +296,37 @@ namespace wa_client.Views.Pages
             // btnUserSave
             // 
             this.btnUserSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUserSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.btnUserSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUserSave.ForeColor = System.Drawing.Color.White;
             this.btnUserSave.Location = new System.Drawing.Point(700, 10);
             this.btnUserSave.Name = "btnUserSave";
-            this.btnUserSave.Size = new System.Drawing.Size(90, 30);
+            this.btnUserSave.Size = new System.Drawing.Size(75, 23);
             this.btnUserSave.TabIndex = 1;
+            this.btnUserSave.Tag = "4";
             this.btnUserSave.Text = "Simpan";
-            this.btnUserSave.UseVisualStyleBackColor = false;
+            this.btnUserSave.UseVisualStyleBackColor = true;
             this.btnUserSave.Click += new System.EventHandler(this.btnUserSave_Click);
             // 
             // btnUserRefresh
             // 
             this.btnUserRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUserRefresh.BackColor = System.Drawing.Color.White;
-            this.btnUserRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUserRefresh.Location = new System.Drawing.Point(600, 10);
             this.btnUserRefresh.Name = "btnUserRefresh";
-            this.btnUserRefresh.Size = new System.Drawing.Size(90, 30);
+            this.btnUserRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnUserRefresh.TabIndex = 2;
+            this.btnUserRefresh.Tag = "5";
             this.btnUserRefresh.Text = "F5 - Refresh";
-            this.btnUserRefresh.UseVisualStyleBackColor = false;
+            this.btnUserRefresh.UseVisualStyleBackColor = true;
             this.btnUserRefresh.Click += new System.EventHandler(this.btnUserRefresh_Click);
             // 
             // btnUserAdd
             // 
             this.btnUserAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnUserAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
-            this.btnUserAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUserAdd.ForeColor = System.Drawing.Color.White;
             this.btnUserAdd.Location = new System.Drawing.Point(10, 10);
             this.btnUserAdd.Name = "btnUserAdd";
-            this.btnUserAdd.Size = new System.Drawing.Size(90, 30);
+            this.btnUserAdd.Size = new System.Drawing.Size(75, 23);
             this.btnUserAdd.TabIndex = 0;
+            this.btnUserAdd.Tag = "6";
             this.btnUserAdd.Text = "+ Tambah";
-            this.btnUserAdd.UseVisualStyleBackColor = false;
+            this.btnUserAdd.UseVisualStyleBackColor = true;
             this.btnUserAdd.Click += new System.EventHandler(this.btnUserAdd_Click);
             // 
             // lblUserTitle
@@ -393,29 +389,25 @@ namespace wa_client.Views.Pages
             // btnServiceRefresh
             // 
             this.btnServiceRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnServiceRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.btnServiceRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnServiceRefresh.ForeColor = System.Drawing.Color.White;
             this.btnServiceRefresh.Location = new System.Drawing.Point(700, 10);
             this.btnServiceRefresh.Name = "btnServiceRefresh";
-            this.btnServiceRefresh.Size = new System.Drawing.Size(90, 30);
+            this.btnServiceRefresh.Size = new System.Drawing.Size(75, 23);
             this.btnServiceRefresh.TabIndex = 0;
+            this.btnServiceRefresh.Tag = "7";
             this.btnServiceRefresh.Text = "Refresh";
-            this.btnServiceRefresh.UseVisualStyleBackColor = false;
+            this.btnServiceRefresh.UseVisualStyleBackColor = true;
             this.btnServiceRefresh.Click += new System.EventHandler(this.btnServiceRefresh_Click);
             // 
             // btnServiceSync
             // 
             this.btnServiceSync.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnServiceSync.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
-            this.btnServiceSync.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnServiceSync.ForeColor = System.Drawing.Color.White;
             this.btnServiceSync.Location = new System.Drawing.Point(10, 10);
             this.btnServiceSync.Name = "btnServiceSync";
-            this.btnServiceSync.Size = new System.Drawing.Size(120, 30);
+            this.btnServiceSync.Size = new System.Drawing.Size(75, 23);
             this.btnServiceSync.TabIndex = 1;
-            this.btnServiceSync.Text = "Sync from Meta";
-            this.btnServiceSync.UseVisualStyleBackColor = false;
+            this.btnServiceSync.Tag = "8";
+            this.btnServiceSync.Text = "Sync";
+            this.btnServiceSync.UseVisualStyleBackColor = true;
             this.btnServiceSync.Click += new System.EventHandler(this.btnServiceSync_Click);
             // 
             // tabMonitor
@@ -471,6 +463,28 @@ namespace wa_client.Views.Pages
             this.tabLog.Text = "Log";
             this.tabLog.UseVisualStyleBackColor = true;
             // 
+            // tabDashboard
+            // 
+            this.tabDashboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.tabDashboard.Location = new System.Drawing.Point(4, 25);
+            this.tabDashboard.Name = "tabDashboard";
+            this.tabDashboard.Padding = new System.Windows.Forms.Padding(3);
+            this.tabDashboard.Size = new System.Drawing.Size(800, 558);
+            this.tabDashboard.TabIndex = 5;
+            this.tabDashboard.Text = "Dashboard";
+            this.tabDashboard.UseVisualStyleBackColor = true;
+            // 
+            // tabAnalytics
+            // 
+            this.tabAnalytics.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.tabAnalytics.Location = new System.Drawing.Point(4, 25);
+            this.tabAnalytics.Name = "tabAnalytics";
+            this.tabAnalytics.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAnalytics.Size = new System.Drawing.Size(800, 558);
+            this.tabAnalytics.TabIndex = 6;
+            this.tabAnalytics.Text = "Analytics";
+            this.tabAnalytics.UseVisualStyleBackColor = true;
+            // 
             // MainPageView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -496,6 +510,8 @@ namespace wa_client.Views.Pages
             this.panelServiceFooter.ResumeLayout(false);
             this.tabMonitor.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
+            this.tabDashboard.ResumeLayout(false);
+            this.tabAnalytics.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
@@ -510,6 +526,8 @@ namespace wa_client.Views.Pages
         private System.Windows.Forms.TabPage tabService;
         private System.Windows.Forms.TabPage tabMonitor;
         private System.Windows.Forms.TabPage tabLog;
+        private System.Windows.Forms.TabPage tabDashboard;
+        private System.Windows.Forms.TabPage tabAnalytics;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage inboxPage;
         private System.Windows.Forms.TabPage outboxPage;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using wa_client.Models;
 using wa_client.Services;
+using wa_client.Views;
 
 namespace wa_client.Views.Pages
 {
@@ -17,6 +18,16 @@ namespace wa_client.Views.Pages
         public MainPageView()
         {
             InitializeComponent();
+
+            var dashboard = new DashboardView();
+            dashboard.Dock = DockStyle.Fill;
+            tabDashboard.Controls.Add(dashboard);
+            dashboard.LoadData();
+
+            var analytics = new AnalyticsView();
+            analytics.Dock = DockStyle.Fill;
+            tabAnalytics.Controls.Add(analytics);
+
             LoadData();
         }
 

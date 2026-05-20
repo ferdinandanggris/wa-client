@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows.Forms;
 using wa_client.Models;
 using wa_client.Services;
-using wa_client.Views;
 using wa_client.Views.Pages;
 
 namespace wa_client.Forms
@@ -42,20 +41,12 @@ namespace wa_client.Forms
 
         private void InitializeTreeView()
         {
-            TreeNode nodeDashboard = new TreeNode("Dashboard");
-            nodeDashboard.Tag = "dashboard";
-
             phoneNode = new TreeNode("Phone Number");
             phoneNode.Tag = "phone";
 
-            TreeNode nodeAnalytics = new TreeNode("Analytics");
-            nodeAnalytics.Tag = "analytics";
-
             LoadPhoneNumbersToTree();
 
-            tvMenu.Nodes.Add(nodeDashboard);
             tvMenu.Nodes.Add(phoneNode);
-            tvMenu.Nodes.Add(nodeAnalytics);
 
             phoneNode.Expand();
         }
@@ -205,28 +196,20 @@ namespace wa_client.Forms
                 currentView.Dispose();
             }
 
-            switch (viewName)
+            if (viewName == "main" || viewName == "phone")
             {
-                case "dashboard":
-                    currentView = new DashboardView();
-                    break;
-                case "main":
-                case "phone":
-                    currentView = new MainPageView();
-                    if (viewName == "phone")
-                    {
-                        var mainPage = (MainPageView)currentView;
-                        var tab = mainPage.Controls.OfType<TabControl>().FirstOrDefault();
-                        if (tab != null && tab.TabPages.Count >= 3)
-                            tab.SelectedTab = tab.TabPages[2];
-                    }
-                    break;
-                case "analytics":
-                    currentView = new AnalyticsView();
-                    break;
-                default:
-                    currentView = new MainPageView();
-                    break;
+                currentView = new MainPageView();
+                if (viewName == "phone")
+                {
+                    var mainPage = (MainPageView)currentView;
+                    var tab = mainPage.Controls.OfType<TabControl>().FirstOrDefault();
+                    if (tab != null && tab.TabPages.Count >= 4)
+                        tab.SelectedTab = tab.TabPages[3];
+                }
+            }
+            else
+            {
+                currentView = new MainPageView();
             }
 
             if (currentView != null)
