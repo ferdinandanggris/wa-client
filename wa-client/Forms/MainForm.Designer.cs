@@ -30,11 +30,6 @@ namespace wa_client.Forms
             this.kirimBroadcastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tentangAplikasiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
-            this.panelSidebarTop = new System.Windows.Forms.Panel();
-            this.btnCollapseRight = new System.Windows.Forms.PictureBox();
-            this.btnCollapseLeft = new System.Windows.Forms.PictureBox();
-            this.lblModul = new System.Windows.Forms.Label();
-            this.pictureLogo = new System.Windows.Forms.PictureBox();
             this.tvMenu = new System.Windows.Forms.TreeView();
             this.panelContent = new System.Windows.Forms.Panel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -43,16 +38,15 @@ namespace wa_client.Forms
             this.lblDateTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerClock = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.panelSidebarTop = new System.Windows.Forms.Panel();
+            this.lblModul = new System.Windows.Forms.Label();
             this.mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
-            this.panelSidebarTop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCollapseRight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCollapseLeft)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
             this.statusStrip.SuspendLayout();
+            this.panelSidebarTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainMenu
@@ -93,19 +87,19 @@ namespace wa_client.Forms
             // logoutToolStripMenuItem
             // 
             this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
-            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.logoutToolStripMenuItem.Text = "Logout";
             this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(132, 6);
             // 
             // keluarToolStripMenuItem
             // 
             this.keluarToolStripMenuItem.Name = "keluarToolStripMenuItem";
-            this.keluarToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.keluarToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.keluarToolStripMenuItem.Text = "Keluar";
             this.keluarToolStripMenuItem.Click += new System.EventHandler(this.keluarToolStripMenuItem_Click);
             // 
@@ -139,8 +133,6 @@ namespace wa_client.Forms
             // 
             this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Left;
-            this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer.IsSplitterFixed = true;
             this.splitContainer.Location = new System.Drawing.Point(0, 24);
             this.splitContainer.Name = "splitContainer";
             this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -148,72 +140,15 @@ namespace wa_client.Forms
             // splitContainer.Panel1
             // 
             this.splitContainer.Panel1.Controls.Add(this.panelSidebarTop);
+            this.splitContainer.Panel1MinSize = 10;
             // 
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.tvMenu);
-            this.splitContainer.Size = new System.Drawing.Size(250, 576);
-            this.splitContainer.SplitterDistance = 70;
+            this.splitContainer.Size = new System.Drawing.Size(211, 576);
+            this.splitContainer.SplitterDistance = 32;
             this.splitContainer.SplitterWidth = 1;
             this.splitContainer.TabIndex = 1;
-            // 
-            // panelSidebarTop
-            // 
-            this.panelSidebarTop.BackColor = System.Drawing.Color.SkyBlue;
-            this.panelSidebarTop.Controls.Add(this.btnCollapseRight);
-            this.panelSidebarTop.Controls.Add(this.btnCollapseLeft);
-            this.panelSidebarTop.Controls.Add(this.lblModul);
-            this.panelSidebarTop.Controls.Add(this.pictureLogo);
-            this.panelSidebarTop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSidebarTop.Location = new System.Drawing.Point(0, 0);
-            this.panelSidebarTop.Name = "panelSidebarTop";
-            this.panelSidebarTop.Size = new System.Drawing.Size(246, 66);
-            this.panelSidebarTop.TabIndex = 0;
-            // 
-            // btnCollapseRight
-            // 
-            this.btnCollapseRight.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnCollapseRight.BackColor = System.Drawing.Color.SkyBlue;
-            this.btnCollapseRight.Location = new System.Drawing.Point(226, 22);
-            this.btnCollapseRight.Name = "btnCollapseRight";
-            this.btnCollapseRight.Size = new System.Drawing.Size(20, 20);
-            this.btnCollapseRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnCollapseRight.TabIndex = 2;
-            this.btnCollapseRight.TabStop = false;
-            this.btnCollapseRight.Click += new System.EventHandler(this.btnCollapseRight_Click);
-            // 
-            // btnCollapseLeft
-            // 
-            this.btnCollapseLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.btnCollapseLeft.BackColor = System.Drawing.Color.SkyBlue;
-            this.btnCollapseLeft.Location = new System.Drawing.Point(0, 22);
-            this.btnCollapseLeft.Name = "btnCollapseLeft";
-            this.btnCollapseLeft.Size = new System.Drawing.Size(20, 20);
-            this.btnCollapseLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnCollapseLeft.TabIndex = 1;
-            this.btnCollapseLeft.TabStop = false;
-            this.btnCollapseLeft.Click += new System.EventHandler(this.btnCollapseLeft_Click);
-            // 
-            // lblModul
-            // 
-            this.lblModul.BackColor = System.Drawing.Color.SkyBlue;
-            this.lblModul.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblModul.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lblModul.Location = new System.Drawing.Point(0, 0);
-            this.lblModul.Name = "lblModul";
-            this.lblModul.Size = new System.Drawing.Size(246, 46);
-            this.lblModul.TabIndex = 0;
-            this.lblModul.Text = "M O D U L";
-            this.lblModul.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pictureLogo
-            // 
-            this.pictureLogo.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pictureLogo.Location = new System.Drawing.Point(0, 46);
-            this.pictureLogo.Name = "pictureLogo";
-            this.pictureLogo.Size = new System.Drawing.Size(246, 20);
-            this.pictureLogo.TabIndex = 3;
-            this.pictureLogo.TabStop = false;
             // 
             // tvMenu
             // 
@@ -224,7 +159,7 @@ namespace wa_client.Forms
             this.tvMenu.HotTracking = true;
             this.tvMenu.Location = new System.Drawing.Point(0, 0);
             this.tvMenu.Name = "tvMenu";
-            this.tvMenu.Size = new System.Drawing.Size(246, 501);
+            this.tvMenu.Size = new System.Drawing.Size(207, 539);
             this.tvMenu.TabIndex = 0;
             this.tvMenu.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvMenu_NodeMouseClick);
             this.tvMenu.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvMenu_NodeMouseDoubleClick);
@@ -234,22 +169,21 @@ namespace wa_client.Forms
             // 
             this.panelContent.BackColor = System.Drawing.Color.White;
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(0, 0);
+            this.panelContent.Location = new System.Drawing.Point(211, 24);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(750, 526);
+            this.panelContent.Size = new System.Drawing.Size(789, 576);
             this.panelContent.TabIndex = 3;
             // 
             // statusStrip
             // 
             this.statusStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.statusStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus,
             this.lblVersion,
             this.lblDateTime});
-            this.statusStrip.Location = new System.Drawing.Point(0, 0);
+            this.statusStrip.Location = new System.Drawing.Point(211, 578);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(750, 22);
+            this.statusStrip.Size = new System.Drawing.Size(789, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 4;
             // 
@@ -283,6 +217,28 @@ namespace wa_client.Forms
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // panelSidebarTop
+            // 
+            this.panelSidebarTop.BackColor = System.Drawing.Color.SkyBlue;
+            this.panelSidebarTop.Controls.Add(this.lblModul);
+            this.panelSidebarTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSidebarTop.Location = new System.Drawing.Point(0, 0);
+            this.panelSidebarTop.Name = "panelSidebarTop";
+            this.panelSidebarTop.Size = new System.Drawing.Size(207, 28);
+            this.panelSidebarTop.TabIndex = 0;
+            // 
+            // lblModul
+            // 
+            this.lblModul.BackColor = System.Drawing.Color.SkyBlue;
+            this.lblModul.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblModul.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblModul.Location = new System.Drawing.Point(0, 0);
+            this.lblModul.Name = "lblModul";
+            this.lblModul.Size = new System.Drawing.Size(207, 28);
+            this.lblModul.TabIndex = 0;
+            this.lblModul.Text = "SERVICE";
+            this.lblModul.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -302,12 +258,9 @@ namespace wa_client.Forms
             this.splitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
-            this.panelSidebarTop.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.btnCollapseRight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCollapseLeft)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            this.panelSidebarTop.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,11 +280,6 @@ namespace wa_client.Forms
         private System.Windows.Forms.ToolStripMenuItem kirimBroadcastToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tentangAplikasiToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer;
-        private System.Windows.Forms.Panel panelSidebarTop;
-        private System.Windows.Forms.PictureBox btnCollapseRight;
-        private System.Windows.Forms.PictureBox btnCollapseLeft;
-        private System.Windows.Forms.Label lblModul;
-        private System.Windows.Forms.PictureBox pictureLogo;
         private System.Windows.Forms.TreeView tvMenu;
         private System.Windows.Forms.Panel panelContent;
         private System.Windows.Forms.StatusStrip statusStrip;
@@ -340,5 +288,7 @@ namespace wa_client.Forms
         private System.Windows.Forms.ToolStripStatusLabel lblDateTime;
         private System.Windows.Forms.Timer timerClock;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Panel panelSidebarTop;
+        private System.Windows.Forms.Label lblModul;
     }
 }

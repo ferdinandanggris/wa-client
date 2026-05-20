@@ -27,6 +27,7 @@ namespace wa_client.Views.Pages
             this.panelCompanyFooter = new System.Windows.Forms.Panel();
             this.btnCompanySave = new System.Windows.Forms.Button();
             this.btnCompanyAdd = new System.Windows.Forms.Button();
+            this.btnCompanyRefresh = new System.Windows.Forms.Button();
             this.lblCompanyTitle = new System.Windows.Forms.Label();
             this.tabUser = new System.Windows.Forms.TabPage();
             this.panelUser = new System.Windows.Forms.Panel();
@@ -34,6 +35,7 @@ namespace wa_client.Views.Pages
             this.panelUserFooter = new System.Windows.Forms.Panel();
             this.btnUserSave = new System.Windows.Forms.Button();
             this.btnUserAdd = new System.Windows.Forms.Button();
+            this.btnUserRefresh = new System.Windows.Forms.Button();
             this.lblUserTitle = new System.Windows.Forms.Label();
             this.tabService = new System.Windows.Forms.TabPage();
             this.panelService = new System.Windows.Forms.Panel();
