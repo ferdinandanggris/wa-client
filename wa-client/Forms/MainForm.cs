@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using wa_client.Models;
 using wa_client.Services;
 using wa_client.Views;
+using wa_client.Views.Pages;
 
 namespace wa_client.Forms
 {
@@ -218,6 +220,8 @@ namespace wa_client.Forms
             }
         }
 
+        private MainPageView _mainPage;
+
         private void ShowView(string viewName)
         {
             SetStatus("Loading " + viewName + "...");
@@ -226,6 +230,7 @@ namespace wa_client.Forms
             {
                 panelContent.Controls.Remove(currentView);
                 currentView.Dispose();
+                _mainPage = null;
             }
 
             switch (viewName)
@@ -234,13 +239,14 @@ namespace wa_client.Forms
                     currentView = new DashboardView();
                     break;
                 case "company":
-                    currentView = new CompanyView();
-                    break;
                 case "user":
-                    currentView = new UserView();
-                    break;
                 case "phone":
-                    currentView = new PhoneNumberView();
+                    _mainPage = new MainPageView();
+                    currentView = _mainPage;
+                    if (viewName == "company")
+                        _mainPage.SelectMasterTab("Company");
+                    else if (viewName == "user")
+                        _mainPage.SelectMasterTab("User");
                     break;
                 case "analytics":
                     currentView = new AnalyticsView();
@@ -250,8 +256,11 @@ namespace wa_client.Forms
                     break;
             }
 
-            currentView.Dock = DockStyle.Fill;
-            panelContent.Controls.Add(currentView);
+            if (currentView != null)
+            {
+                currentView.Dock = DockStyle.Fill;
+                panelContent.Controls.Add(currentView);
+            }
             lblTitle.Text = GetTitleForView(viewName);
             SetStatus("Ready");
         }
@@ -261,9 +270,9 @@ namespace wa_client.Forms
             switch (viewName)
             {
                 case "dashboard": return "Dashboard";
-                case "company": return "Company Management";
-                case "user": return "User Management";
-                case "phone": return "Phone Number Management";
+                case "company": return "Master Data";
+                case "user": return "Master Data";
+                case "phone": return "Service";
                 case "analytics": return "Analytics";
                 default: return "WA Gateway Admin";
             }
@@ -295,14 +304,10 @@ namespace wa_client.Forms
             SetStatus("Refreshing...");
             if (currentView != null)
             {
-                if (currentView is CompanyView)
-                    ((CompanyView)currentView).LoadData();
-                else if (currentView is UserView)
-                    ((UserView)currentView).LoadData();
-                else if (currentView is PhoneNumberView)
-                    ((PhoneNumberView)currentView).LoadData();
-                else if (currentView is DashboardView)
-                    ((DashboardView)currentView).LoadData();
+                if (currentView is MainPageView mainPage)
+                    mainPage.LoadData();
+                else if (currentView is DashboardView db)
+                    db.LoadData();
             }
             RefreshPhoneNumbers();
             SetStatus("Ready");

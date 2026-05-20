@@ -77,6 +77,12 @@
     <Compile Include="Views\PhoneNumberView.Designer.cs">
       <DependentUpon>PhoneNumberView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pages\MainPageView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Pages\MainPageView.Designer.cs">
+      <DependentUpon>MainPageView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\PhoneDetailView.cs">
       <SubType>UserControl</SubType>
     </Compile>
