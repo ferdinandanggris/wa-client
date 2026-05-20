@@ -153,6 +153,7 @@ namespace wa_client.Views.Pages
             this.tabCompany.Controls.Add(this.panelCompany);
             this.tabCompany.Controls.Add(this.panelCompanyFooter);
             this.tabCompany.Controls.Add(this.lblCompanyTitle);
+            this.tabCompany.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tabCompany.Location = new System.Drawing.Point(4, 25);
             this.tabCompany.Name = "tabCompany";
             this.tabCompany.Padding = new System.Windows.Forms.Padding(3);
@@ -250,6 +251,7 @@ namespace wa_client.Views.Pages
             this.tabUser.Controls.Add(this.panelUser);
             this.tabUser.Controls.Add(this.panelUserFooter);
             this.tabUser.Controls.Add(this.lblUserTitle);
+            this.tabUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tabUser.Location = new System.Drawing.Point(4, 25);
             this.tabUser.Name = "tabUser";
             this.tabUser.Padding = new System.Windows.Forms.Padding(3);
@@ -346,6 +348,7 @@ namespace wa_client.Views.Pages
             // 
             this.tabService.Controls.Add(this.panelService);
             this.tabService.Controls.Add(this.panelServiceFooter);
+            this.tabService.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tabService.Location = new System.Drawing.Point(4, 25);
             this.tabService.Name = "tabService";
             this.tabService.Padding = new System.Windows.Forms.Padding(3);

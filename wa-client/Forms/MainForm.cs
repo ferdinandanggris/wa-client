@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using wa_client.Models;
 using wa_client.Services;
+using wa_client.Views;
 using wa_client.Views.Pages;
 
 namespace wa_client.Forms
