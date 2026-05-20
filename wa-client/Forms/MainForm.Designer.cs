@@ -17,40 +17,206 @@ namespace wa_client.Forms
 
         private void InitializeComponent()
         {
-            this.panelSidebar = new System.Windows.Forms.Panel();
+            this.components = new System.ComponentModel.Container();
+            this.mainMenu = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pengaturanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.keluarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alatPengujiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tesKoneksiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kirimBroadcastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tentangAplikasiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.panelSidebarTop = new System.Windows.Forms.Panel();
+            this.btnCollapseRight = new System.Windows.Forms.PictureBox();
+            this.btnCollapseLeft = new System.Windows.Forms.PictureBox();
+            this.lblModul = new System.Windows.Forms.Label();
+            this.pictureLogo = new System.Windows.Forms.PictureBox();
             this.tvMenu = new System.Windows.Forms.TreeView();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
-            this.panelSidebar.SuspendLayout();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblVersion = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblDateTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timerClock = new System.Windows.Forms.Timer(this.components);
+            this.mainMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
+            this.panelSidebarTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCollapseRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCollapseLeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
             this.panelHeader.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panelSidebar
+            // mainMenu
             // 
-            this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(48)))));
-            this.panelSidebar.Controls.Add(this.tvMenu);
-            this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSidebar.Location = new System.Drawing.Point(0, 0);
-            this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(200, 600);
-            this.panelSidebar.TabIndex = 0;
+            this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.alatPengujiToolStripMenuItem,
+            this.kirimBroadcastToolStripMenuItem,
+            this.tentangAplikasiToolStripMenuItem});
+            this.mainMenu.Location = new System.Drawing.Point(0, 0);
+            this.mainMenu.Name = "mainMenu";
+            this.mainMenu.Size = new System.Drawing.Size(1000, 24);
+            this.mainMenu.TabIndex = 0;
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pengaturanToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.keluarToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // pengaturanToolStripMenuItem
+            // 
+            this.pengaturanToolStripMenuItem.Name = "pengaturanToolStripMenuItem";
+            this.pengaturanToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.pengaturanToolStripMenuItem.Text = "Pengaturan";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(110, 6);
+            // 
+            // keluarToolStripMenuItem
+            // 
+            this.keluarToolStripMenuItem.Name = "keluarToolStripMenuItem";
+            this.keluarToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.keluarToolStripMenuItem.Text = "Keluar";
+            this.keluarToolStripMenuItem.Click += new System.EventHandler(this.keluarToolStripMenuItem_Click);
+            // 
+            // alatPengujiToolStripMenuItem
+            // 
+            this.alatPengujiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tesKoneksiToolStripMenuItem});
+            this.alatPengujiToolStripMenuItem.Name = "alatPengujiToolStripMenuItem";
+            this.alatPengujiToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
+            this.alatPengujiToolStripMenuItem.Text = "Alat Penguji";
+            // 
+            // tesKoneksiToolStripMenuItem
+            // 
+            this.tesKoneksiToolStripMenuItem.Name = "tesKoneksiToolStripMenuItem";
+            this.tesKoneksiToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.tesKoneksiToolStripMenuItem.Text = "Tes Koneksi";
+            // 
+            // kirimBroadcastToolStripMenuItem
+            // 
+            this.kirimBroadcastToolStripMenuItem.Name = "kirimBroadcastToolStripMenuItem";
+            this.kirimBroadcastToolStripMenuItem.Size = new System.Drawing.Size(109, 20);
+            this.kirimBroadcastToolStripMenuItem.Text = "Kirim Broadcast";
+            // 
+            // tentangAplikasiToolStripMenuItem
+            // 
+            this.tentangAplikasiToolStripMenuItem.Name = "tentangAplikasiToolStripMenuItem";
+            this.tentangAplikasiToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.tentangAplikasiToolStripMenuItem.Text = "Bantuan";
+            // 
+            // splitContainer
+            // 
+            this.splitContainer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer.IsSplitterFixed = true;
+            this.splitContainer.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer.Name = "splitContainer";
+            this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer.Panel1
+            // 
+            this.splitContainer.Panel1.Controls.Add(this.panelSidebarTop);
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.Controls.Add(this.tvMenu);
+            this.splitContainer.Size = new System.Drawing.Size(250, 576);
+            this.splitContainer.SplitterDistance = 70;
+            this.splitContainer.SplitterWidth = 1;
+            this.splitContainer.TabIndex = 1;
+            // 
+            // panelSidebarTop
+            // 
+            this.panelSidebarTop.BackColor = System.Drawing.Color.SkyBlue;
+            this.panelSidebarTop.Controls.Add(this.btnCollapseRight);
+            this.panelSidebarTop.Controls.Add(this.btnCollapseLeft);
+            this.panelSidebarTop.Controls.Add(this.lblModul);
+            this.panelSidebarTop.Controls.Add(this.pictureLogo);
+            this.panelSidebarTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSidebarTop.Location = new System.Drawing.Point(0, 0);
+            this.panelSidebarTop.Name = "panelSidebarTop";
+            this.panelSidebarTop.Size = new System.Drawing.Size(246, 66);
+            this.panelSidebarTop.TabIndex = 0;
+            // 
+            // btnCollapseRight
+            // 
+            this.btnCollapseRight.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnCollapseRight.BackColor = System.Drawing.Color.SkyBlue;
+            this.btnCollapseRight.Location = new System.Drawing.Point(226, 22);
+            this.btnCollapseRight.Name = "btnCollapseRight";
+            this.btnCollapseRight.Size = new System.Drawing.Size(20, 20);
+            this.btnCollapseRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCollapseRight.TabIndex = 2;
+            this.btnCollapseRight.TabStop = false;
+            this.btnCollapseRight.Click += new System.EventHandler(this.btnCollapseRight_Click);
+            // 
+            // btnCollapseLeft
+            // 
+            this.btnCollapseLeft.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btnCollapseLeft.BackColor = System.Drawing.Color.SkyBlue;
+            this.btnCollapseLeft.Location = new System.Drawing.Point(0, 22);
+            this.btnCollapseLeft.Name = "btnCollapseLeft";
+            this.btnCollapseLeft.Size = new System.Drawing.Size(20, 20);
+            this.btnCollapseLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCollapseLeft.TabIndex = 1;
+            this.btnCollapseLeft.TabStop = false;
+            this.btnCollapseLeft.Click += new System.EventHandler(this.btnCollapseLeft_Click);
+            // 
+            // lblModul
+            // 
+            this.lblModul.BackColor = System.Drawing.Color.SkyBlue;
+            this.lblModul.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblModul.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblModul.Location = new System.Drawing.Point(0, 0);
+            this.lblModul.Name = "lblModul";
+            this.lblModul.Size = new System.Drawing.Size(246, 46);
+            this.lblModul.TabIndex = 0;
+            this.lblModul.Text = "M O D U L";
+            this.lblModul.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureLogo
+            // 
+            this.pictureLogo.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pictureLogo.Location = new System.Drawing.Point(0, 46);
+            this.pictureLogo.Name = "pictureLogo";
+            this.pictureLogo.Size = new System.Drawing.Size(246, 20);
+            this.pictureLogo.TabIndex = 3;
+            this.pictureLogo.TabStop = false;
             // 
             // tvMenu
             // 
-            this.tvMenu.BackColor = System.Drawing.Color.White;
+            this.tvMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(232)))));
             this.tvMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tvMenu.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.tvMenu.ForeColor = System.Drawing.Color.Black;
+            this.tvMenu.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tvMenu.FullRowSelect = true;
+            this.tvMenu.HotTracking = true;
             this.tvMenu.Location = new System.Drawing.Point(0, 0);
             this.tvMenu.Name = "tvMenu";
-            this.tvMenu.ShowRootLines = false;
-            this.tvMenu.Size = new System.Drawing.Size(200, 600);
+            this.tvMenu.ShowLines = true;
+            this.tvMenu.Size = new System.Drawing.Size(246, 505);
             this.tvMenu.TabIndex = 0;
             this.tvMenu.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvMenu_NodeMouseClick);
+            this.tvMenu.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvMenu_NodeMouseDoubleClick);
             this.tvMenu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tvMenu_MouseDown);
             // 
             // panelHeader
@@ -60,10 +226,10 @@ namespace wa_client.Forms
             this.panelHeader.Controls.Add(this.btnRefresh);
             this.panelHeader.Controls.Add(this.lblTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(200, 0);
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(800, 50);
-            this.panelHeader.TabIndex = 1;
+            this.panelHeader.Size = new System.Drawing.Size(750, 50);
+            this.panelHeader.TabIndex = 2;
             // 
             // btnLogout
             // 
@@ -71,7 +237,7 @@ namespace wa_client.Forms
             this.btnLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
             this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.Location = new System.Drawing.Point(695, 10);
+            this.btnLogout.Location = new System.Drawing.Point(645, 10);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(90, 30);
             this.btnLogout.TabIndex = 2;
@@ -84,11 +250,11 @@ namespace wa_client.Forms
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefresh.BackColor = System.Drawing.Color.White;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefresh.Location = new System.Drawing.Point(600, 10);
+            this.btnRefresh.Location = new System.Drawing.Point(550, 10);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(90, 30);
             this.btnRefresh.TabIndex = 1;
-            this.btnRefresh.Text = "Refresh (F5)";
+            this.btnRefresh.Text = "F5 - Refresh";
             this.btnRefresh.UseVisualStyleBackColor = false;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -107,37 +273,108 @@ namespace wa_client.Forms
             // 
             this.panelContent.BackColor = System.Drawing.Color.White;
             this.panelContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelContent.Location = new System.Drawing.Point(200, 50);
+            this.panelContent.Location = new System.Drawing.Point(0, 0);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Size = new System.Drawing.Size(800, 550);
-            this.panelContent.TabIndex = 2;
+            this.panelContent.Size = new System.Drawing.Size(750, 502);
+            this.panelContent.TabIndex = 3;
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblStatus,
+            this.lblVersion,
+            this.lblDateTime});
+            this.statusStrip.Location = new System.Drawing.Point(0, 0);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(750, 22);
+            this.statusStrip.SizingGrip = false;
+            this.statusStrip.TabIndex = 4;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(44, 17);
+            this.lblStatus.Text = "Ready";
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(54, 17);
+            this.lblVersion.Text = "v 1.0.0";
+            // 
+            // lblDateTime
+            // 
+            this.lblDateTime.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblDateTime.Name = "lblDateTime";
+            this.lblDateTime.Size = new System.Drawing.Size(108, 17);
+            this.lblDateTime.Text = "20/05/2026 10:00";
+            // 
+            // timerClock
+            // 
+            this.timerClock.Interval = 1000;
+            this.timerClock.Tick += new System.EventHandler(this.timerClock_Tick);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 600);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.panelContent);
             this.Controls.Add(this.panelHeader);
-            this.Controls.Add(this.panelSidebar);
+            this.Controls.Add(this.splitContainer);
+            this.Controls.Add(this.mainMenu);
+            this.MainMenuStrip = this.mainMenu;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WA Gateway Admin";
-            this.panelSidebar.ResumeLayout(false);
+            this.mainMenu.ResumeLayout(false);
+            this.mainMenu.PerformLayout();
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
+            this.panelSidebarTop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.btnCollapseRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnCollapseLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).EndInit();
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
-
+            this.PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panelSidebar;
+        private System.Windows.Forms.MenuStrip mainMenu;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pengaturanToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem keluarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alatPengujiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tesKoneksiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem kirimBroadcastToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tentangAplikasiToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer;
+        private System.Windows.Forms.Panel panelSidebarTop;
+        private System.Windows.Forms.PictureBox btnCollapseRight;
+        private System.Windows.Forms.PictureBox btnCollapseLeft;
+        private System.Windows.Forms.Label lblModul;
+        private System.Windows.Forms.PictureBox pictureLogo;
         private System.Windows.Forms.TreeView tvMenu;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Panel panelContent;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
+        private System.Windows.Forms.ToolStripStatusLabel lblVersion;
+        private System.Windows.Forms.ToolStripStatusLabel lblDateTime;
+        private System.Windows.Forms.Timer timerClock;
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,12 +12,30 @@ namespace wa_client.Forms
     {
         private UserControl currentView;
         private TreeNode phoneNode;
+        private bool sidebarExpanded = true;
+        private const int SidebarExpandedWidth = 250;
+        private const int SidebarCollapsedWidth = 50;
 
         public MainForm()
         {
             InitializeComponent();
+            
+            splitContainer.Width = SidebarExpandedWidth;
+            
             InitializeTreeView();
             LoadInitialView();
+            InitializeClock();
+        }
+
+        private void InitializeClock()
+        {
+            lblDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+            timerClock.Start();
+        }
+
+        private void timerClock_Tick(object sender, EventArgs e)
+        {
+            lblDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
         }
 
         private void InitializeTreeView()
@@ -81,6 +98,7 @@ namespace wa_client.Forms
         private void LoadInitialView()
         {
             ShowView("dashboard");
+            SetStatus("Ready");
         }
 
         private void tvMenu_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -89,7 +107,6 @@ namespace wa_client.Forms
             {
                 tvMenu.SelectedNode = e.Node;
 
-                // Single click - expand/collapse parent nodes only
                 if (e.Node.Level == 0)
                 {
                     if (e.Node.IsExpanded)
@@ -98,7 +115,6 @@ namespace wa_client.Forms
                         e.Node.Expand();
                 }
 
-                // For top level menu items, show view
                 if (e.Node.Level == 0 && e.Node.Tag != null)
                 {
                     string tag = e.Node.Tag.ToString();
@@ -144,6 +160,7 @@ namespace wa_client.Forms
             panelContent.Controls.Add(detailView);
             currentView = detailView;
             lblTitle.Text = $"Phone: {phone.PhoneNumberVal}";
+            SetStatus("Viewing phone detail");
         }
 
         private void tvMenu_MouseDown(object sender, MouseEventArgs e)
@@ -203,6 +220,8 @@ namespace wa_client.Forms
 
         private void ShowView(string viewName)
         {
+            SetStatus("Loading " + viewName + "...");
+
             if (currentView != null)
             {
                 panelContent.Controls.Remove(currentView);
@@ -234,6 +253,7 @@ namespace wa_client.Forms
             currentView.Dock = DockStyle.Fill;
             panelContent.Controls.Add(currentView);
             lblTitle.Text = GetTitleForView(viewName);
+            SetStatus("Ready");
         }
 
         private string GetTitleForView(string viewName)
@@ -251,18 +271,28 @@ namespace wa_client.Forms
 
         private void SyncPhoneNumbers()
         {
+            SetStatus("Syncing phone numbers...");
             MessageBox.Show("Syncing phone numbers from Meta...", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SetStatus("Ready");
         }
 
         private void RefreshPhoneNumbers()
         {
+            SetStatus("Refreshing phone numbers...");
             LoadPhoneNumbersToTree();
             phoneNode.Expand();
             MessageBox.Show("Phone numbers refreshed!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SetStatus("Ready");
+        }
+
+        private void SetStatus(string message)
+        {
+            lblStatus.Text = message;
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            SetStatus("Refreshing...");
             if (currentView != null)
             {
                 if (currentView is CompanyView)
@@ -271,8 +301,11 @@ namespace wa_client.Forms
                     ((UserView)currentView).LoadData();
                 else if (currentView is PhoneNumberView)
                     ((PhoneNumberView)currentView).LoadData();
+                else if (currentView is DashboardView)
+                    ((DashboardView)currentView).LoadData();
             }
             RefreshPhoneNumbers();
+            SetStatus("Ready");
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
@@ -287,6 +320,58 @@ namespace wa_client.Forms
                 loginForm.ShowDialog();
                 this.Close();
             }
+        }
+
+        private void btnCollapseLeft_Click(object sender, EventArgs e)
+        {
+            CollapseSidebar();
+        }
+
+        private void btnCollapseRight_Click(object sender, EventArgs e)
+        {
+            if (!sidebarExpanded)
+            {
+                ExpandSidebar();
+            }
+            else
+            {
+                CollapseSidebar();
+            }
+        }
+
+        private void CollapseSidebar()
+        {
+            if (sidebarExpanded)
+            {
+                splitContainer.Width = SidebarCollapsedWidth;
+                panelSidebarTop.Visible = false;
+                tvMenu.Visible = false;
+                sidebarExpanded = false;
+                
+                panelHeader.Left = SidebarCollapsedWidth;
+                panelContent.Left = SidebarCollapsedWidth;
+                statusStrip.Left = SidebarCollapsedWidth;
+            }
+        }
+
+        private void ExpandSidebar()
+        {
+            if (!sidebarExpanded)
+            {
+                splitContainer.Width = SidebarExpandedWidth;
+                panelSidebarTop.Visible = true;
+                tvMenu.Visible = true;
+                sidebarExpanded = true;
+                
+                panelHeader.Left = SidebarExpandedWidth;
+                panelContent.Left = SidebarExpandedWidth;
+                statusStrip.Left = SidebarExpandedWidth;
+            }
+        }
+
+        private void keluarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
