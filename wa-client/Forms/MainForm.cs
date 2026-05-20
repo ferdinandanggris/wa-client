@@ -91,15 +91,7 @@ namespace wa_client.Forms
                         e.Node.Expand();
                 }
 
-                if (e.Node.Level == 0 && e.Node.Tag != null)
-                {
-                    string tag = e.Node.Tag.ToString();
-                    if (tag != "phone")
-                    {
-                        ShowView(tag);
-                    }
-                }
-                else if (e.Node.Level == 1 && e.Node.Parent.Tag?.ToString() == "phone")
+                if (e.Node.Level == 1 && e.Node.Parent.Tag?.ToString() == "phone")
                 {
                     ShowView("phone");
                 }
@@ -116,11 +108,6 @@ namespace wa_client.Forms
                     ShowPhoneDetail(phone);
                 }
             }
-            else if (e.Node.Level == 0 && e.Node.Tag?.ToString() != "phone")
-            {
-                string tag = e.Node.Tag?.ToString();
-                ShowView(tag);
-            }
         }
 
         private void ShowPhoneDetail(PhoneNumber phone)
@@ -132,7 +119,7 @@ namespace wa_client.Forms
             }
 
             var detailView = new PhoneDetailView(phone);
-            detailView.Dock = DockStyle.Fill;
+            //detailView.Dock = DockStyle.Fill;
             panelContent.Controls.Add(detailView);
             currentView = detailView;
             SetStatus("Viewing phone detail");
@@ -173,10 +160,10 @@ namespace wa_client.Forms
                     if (phone != null)
                     {
                         cms.Items.Add("View Detail", null, (s, e) => ShowPhoneDetail(phone));
-                        cms.Items.Add("Edit", null, (s, e) => MessageBox.Show($"Edit: {phone.PhoneNumberVal}"));
+                        cms.Items.Add("Edit", null, (s, e) => ShowEditProfile(phone));
                         cms.Items.Add(new ToolStripSeparator());
-                        cms.Items.Add("Assign to Company", null, (s, e) => MessageBox.Show($"Assign: {phone.PhoneNumberVal}"));
-                        cms.Items.Add("Update Profile", null, (s, e) => MessageBox.Show($"Profile: {phone.PhoneNumberVal}"));
+                        cms.Items.Add("Assign to Company", null, (s, e) => ShowAssignCompany(phone));
+                        cms.Items.Add("Update Profile", null, (s, e) => ShowUpdateProfile(phone));
                     }
                 }
             }
@@ -197,20 +184,13 @@ namespace wa_client.Forms
                 currentView.Dispose();
             }
 
-            if (viewName == "main" || viewName == "phone")
+            currentView = new MainPageView();
+            if (viewName == "phone")
             {
-                currentView = new MainPageView();
-                if (viewName == "phone")
-                {
-                    var mainPage = (MainPageView)currentView;
-                    var tab = mainPage.Controls.OfType<TabControl>().FirstOrDefault();
-                    if (tab != null && tab.TabPages.Count >= 4)
-                        tab.SelectedTab = tab.TabPages[3];
-                }
-            }
-            else
-            {
-                currentView = new MainPageView();
+                var mainPage = (MainPageView)currentView;
+                var tab = mainPage.Controls.OfType<TabControl>().FirstOrDefault();
+                if (tab != null && tab.TabPages.Count >= 4)
+                    tab.SelectedTab = tab.TabPages[3];
             }
 
             if (currentView != null)
@@ -221,10 +201,53 @@ namespace wa_client.Forms
             SetStatus("Ready");
         }
 
+        private void ShowEditProfile(PhoneNumber phone)
+        {
+            using (var form = new ProfileEditForm(phone.Id, phone.PhoneNumberVal))
+            {
+                form.ShowDialog(this);
+            }
+        }
+
+        private void ShowAssignCompany(PhoneNumber phone)
+        {
+            using (var form = new AssignCompanyForm(phone.Id, phone.PhoneNumberVal))
+            {
+                form.ShowDialog(this);
+            }
+            RefreshPhoneNumbers();
+        }
+
+        private void ShowUpdateProfile(PhoneNumber phone)
+        {
+            SetStatus("Fetching profile...");
+            var response = ApiClient.Instance.Get<PhoneNumberProfile>($"/api/v1/phone-numbers/{phone.Id}/profile");
+            if (response.Success && response.Data != null)
+            {
+                var p = response.Data;
+                var info = $"About: {p.About}\nAddress: {p.Address}\nDescription: {p.Description}\nEmail: {p.Email}\nWebsites: {string.Join(", ", p.Websites ?? new string[0])}\nVertical: {p.Vertical}";
+                MessageBox.Show(info, "Profile - " + phone.PhoneNumberVal, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Failed to fetch profile: " + response.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            SetStatus("Ready");
+        }
+
         private void SyncPhoneNumbers()
         {
             SetStatus("Syncing phone numbers...");
-            MessageBox.Show("Syncing phone numbers from Meta...", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var result = ApiClient.Instance.Post<object>("/api/v1/phone-numbers/sync", null);
+            if (result.Success)
+            {
+                MessageBox.Show("Sync completed!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RefreshPhoneNumbers();
+            }
+            else
+            {
+                MessageBox.Show("Sync failed: " + result.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             SetStatus("Ready");
         }
 
@@ -305,11 +328,6 @@ namespace wa_client.Forms
             if (keyData == Keys.F5 && currentView is MainPageView mainPage)
             {
                 mainPage.LoadData();
-                return true;
-            }
-            if (keyData == Keys.F5 && currentView is DashboardView db)
-            {
-                db.LoadData();
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);

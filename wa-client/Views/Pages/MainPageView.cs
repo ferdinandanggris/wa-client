@@ -28,6 +28,11 @@ namespace wa_client.Views.Pages
             analytics.Dock = DockStyle.Fill;
             tabAnalytics.Controls.Add(analytics);
 
+            var billing = new BillingView();
+            billing.Dock = DockStyle.Fill;
+            tabLog.Controls.Add(billing);
+            tabLog.Text = "Billing";
+
             LoadData();
         }
 
@@ -167,16 +172,28 @@ namespace wa_client.Views.Pages
 
         private void btnCompanySave_Click(object sender, EventArgs e)
         {
-            foreach (var c in _companies.Where(c => c.IsDirty || c.IsNew || c.IsDeleted))
+            int created = 0, updated = 0, deleted = 0;
+            foreach (var c in _companies.Where(c => c.IsDirty || c.IsNew || c.IsDeleted).ToList())
             {
                 if (c.IsNew)
-                    ApiClient.Instance.Post<Company>("/api/v1/companies", c);
+                {
+                    var r = ApiClient.Instance.Post<Company>("/api/v1/companies", c);
+                    if (r.Success) created++; else MessageBox.Show($"Create failed: {r.ErrorMessage}", "Error");
+                }
                 else if (c.IsDeleted)
-                    ApiClient.Instance.Delete<object>($"/api/v1/companies/{c.Id}");
+                {
+                    var r = ApiClient.Instance.Delete<object>($"/api/v1/companies/{c.Id}");
+                    if (r.Success) deleted++; else MessageBox.Show($"Delete failed: {r.ErrorMessage}", "Error");
+                }
                 else if (c.IsDirty)
-                    ApiClient.Instance.Put<Company>($"/api/v1/companies/{c.Id}", c);
+                {
+                    var r = ApiClient.Instance.Put<Company>($"/api/v1/companies/{c.Id}", c);
+                    if (r.Success) updated++; else MessageBox.Show($"Update failed: {r.ErrorMessage}", "Error");
+                }
             }
             LoadCompanies();
+            if (created > 0 || updated > 0 || deleted > 0)
+                MessageBox.Show($"Saved: {created} created, {updated} updated, {deleted} deleted", "Success");
         }
 
         private void btnUserAdd_Click(object sender, EventArgs e)
@@ -200,16 +217,28 @@ namespace wa_client.Views.Pages
 
         private void btnUserSave_Click(object sender, EventArgs e)
         {
-            foreach (var u in _users.Where(u => u.IsDirty || u.IsNew || u.IsDeleted))
+            int created = 0, updated = 0, deleted = 0;
+            foreach (var u in _users.Where(u => u.IsDirty || u.IsNew || u.IsDeleted).ToList())
             {
                 if (u.IsNew)
-                    ApiClient.Instance.Post<User>("/api/v1/users", u);
+                {
+                    var r = ApiClient.Instance.Post<User>("/api/v1/users", u);
+                    if (r.Success) created++; else MessageBox.Show($"Create failed: {r.ErrorMessage}", "Error");
+                }
                 else if (u.IsDeleted)
-                    ApiClient.Instance.Delete<object>($"/api/v1/users/{u.Id}");
+                {
+                    var r = ApiClient.Instance.Delete<object>($"/api/v1/users/{u.Id}");
+                    if (r.Success) deleted++; else MessageBox.Show($"Delete failed: {r.ErrorMessage}", "Error");
+                }
                 else if (u.IsDirty)
-                    ApiClient.Instance.Put<User>($"/api/v1/users/{u.Id}", u);
+                {
+                    var r = ApiClient.Instance.Put<User>($"/api/v1/users/{u.Id}", u);
+                    if (r.Success) updated++; else MessageBox.Show($"Update failed: {r.ErrorMessage}", "Error");
+                }
             }
             LoadUsers();
+            if (created > 0 || updated > 0 || deleted > 0)
+                MessageBox.Show($"Saved: {created} created, {updated} updated, {deleted} deleted", "Success");
         }
 
         private void btnCompanyRefresh_Click(object sender, EventArgs e)
