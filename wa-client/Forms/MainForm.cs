@@ -44,34 +44,16 @@ namespace wa_client.Forms
         {
             TreeNode nodeDashboard = new TreeNode("Dashboard");
             nodeDashboard.Tag = "dashboard";
-            nodeDashboard.ImageIndex = 0;
-            nodeDashboard.SelectedImageIndex = 0;
-
-            TreeNode nodeCompany = new TreeNode("Company");
-            nodeCompany.Tag = "company";
-            nodeCompany.ImageIndex = 1;
-            nodeCompany.SelectedImageIndex = 1;
-
-            TreeNode nodeUser = new TreeNode("User");
-            nodeUser.Tag = "user";
-            nodeUser.ImageIndex = 2;
-            nodeUser.SelectedImageIndex = 2;
 
             phoneNode = new TreeNode("Phone Number");
             phoneNode.Tag = "phone";
-            phoneNode.ImageIndex = 3;
-            phoneNode.SelectedImageIndex = 3;
-
-            LoadPhoneNumbersToTree();
 
             TreeNode nodeAnalytics = new TreeNode("Analytics");
             nodeAnalytics.Tag = "analytics";
-            nodeAnalytics.ImageIndex = 4;
-            nodeAnalytics.SelectedImageIndex = 4;
+
+            LoadPhoneNumbersToTree();
 
             tvMenu.Nodes.Add(nodeDashboard);
-            tvMenu.Nodes.Add(nodeCompany);
-            tvMenu.Nodes.Add(nodeUser);
             tvMenu.Nodes.Add(phoneNode);
             tvMenu.Nodes.Add(nodeAnalytics);
 
@@ -99,7 +81,7 @@ namespace wa_client.Forms
 
         private void LoadInitialView()
         {
-            ShowView("dashboard");
+            ShowView("main");
             SetStatus("Ready");
         }
 
@@ -186,12 +168,6 @@ namespace wa_client.Forms
             {
                 switch (node.Tag?.ToString())
                 {
-                    case "company":
-                        cms.Items.Add("Add Company", null, (s, e) => ShowView("company"));
-                        break;
-                    case "user":
-                        cms.Items.Add("Add User", null, (s, e) => ShowView("user"));
-                        break;
                     case "phone":
                         cms.Items.Add("Sync from Meta", null, (s, e) => SyncPhoneNumbers());
                         cms.Items.Add("Refresh", null, (s, e) => RefreshPhoneNumbers());
@@ -220,8 +196,6 @@ namespace wa_client.Forms
             }
         }
 
-        private MainPageView _mainPage;
-
         private void ShowView(string viewName)
         {
             SetStatus("Loading " + viewName + "...");
@@ -230,7 +204,6 @@ namespace wa_client.Forms
             {
                 panelContent.Controls.Remove(currentView);
                 currentView.Dispose();
-                _mainPage = null;
             }
 
             switch (viewName)
@@ -238,21 +211,22 @@ namespace wa_client.Forms
                 case "dashboard":
                     currentView = new DashboardView();
                     break;
-                case "company":
-                case "user":
+                case "main":
                 case "phone":
-                    _mainPage = new MainPageView();
-                    currentView = _mainPage;
-                    if (viewName == "company")
-                        _mainPage.SelectMasterTab("Company");
-                    else if (viewName == "user")
-                        _mainPage.SelectMasterTab("User");
+                    currentView = new MainPageView();
+                    if (viewName == "phone")
+                    {
+                        var mainPage = (MainPageView)currentView;
+                        var tab = mainPage.Controls.OfType<TabControl>().FirstOrDefault();
+                        if (tab != null && tab.TabPages.Count >= 3)
+                            tab.SelectedTab = tab.TabPages[2];
+                    }
                     break;
                 case "analytics":
                     currentView = new AnalyticsView();
                     break;
                 default:
-                    currentView = new DashboardView();
+                    currentView = new MainPageView();
                     break;
             }
 
@@ -270,8 +244,7 @@ namespace wa_client.Forms
             switch (viewName)
             {
                 case "dashboard": return "Dashboard";
-                case "company": return "Master Data";
-                case "user": return "Master Data";
+                case "main": return "Company Management";
                 case "phone": return "Service";
                 case "analytics": return "Analytics";
                 default: return "WA Gateway Admin";

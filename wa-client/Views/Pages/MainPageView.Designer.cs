@@ -21,19 +21,26 @@ namespace wa_client.Views.Pages
             this.lblOutGagal = new System.Windows.Forms.Label();
             this.cboIsOutbox = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabMaster = new System.Windows.Forms.TabPage();
-            this.panelMaster = new System.Windows.Forms.Panel();
-            this.dgvMaster = new System.Windows.Forms.DataGridView();
-            this.panelMasterFooter = new System.Windows.Forms.Panel();
-            this.btnMasterSave = new System.Windows.Forms.Button();
-            this.btnMasterAdd = new System.Windows.Forms.Button();
-            this.cboMasterType = new System.Windows.Forms.ComboBox();
+            this.tabCompany = new System.Windows.Forms.TabPage();
+            this.panelCompany = new System.Windows.Forms.Panel();
+            this.dgvCompany = new System.Windows.Forms.DataGridView();
+            this.panelCompanyFooter = new System.Windows.Forms.Panel();
+            this.btnCompanySave = new System.Windows.Forms.Button();
+            this.btnCompanyAdd = new System.Windows.Forms.Button();
+            this.lblCompanyTitle = new System.Windows.Forms.Label();
+            this.tabUser = new System.Windows.Forms.TabPage();
+            this.panelUser = new System.Windows.Forms.Panel();
+            this.dgvUser = new System.Windows.Forms.DataGridView();
+            this.panelUserFooter = new System.Windows.Forms.Panel();
+            this.btnUserSave = new System.Windows.Forms.Button();
+            this.btnUserAdd = new System.Windows.Forms.Button();
+            this.lblUserTitle = new System.Windows.Forms.Label();
             this.tabService = new System.Windows.Forms.TabPage();
             this.panelService = new System.Windows.Forms.Panel();
             this.dgvService = new System.Windows.Forms.DataGridView();
             this.panelServiceFooter = new System.Windows.Forms.Panel();
-            this.btnServiceSync = new System.Windows.Forms.Button();
             this.btnServiceRefresh = new System.Windows.Forms.Button();
+            this.btnServiceSync = new System.Windows.Forms.Button();
             this.tabMonitor = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.inboxPage = new System.Windows.Forms.TabPage();
@@ -41,10 +48,14 @@ namespace wa_client.Views.Pages
             this.tabLog = new System.Windows.Forms.TabPage();
             this.panelTop.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabMaster.SuspendLayout();
-            this.panelMaster.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMaster)).BeginInit();
-            this.panelMasterFooter.SuspendLayout();
+            this.tabCompany.SuspendLayout();
+            this.panelCompany.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCompany)).BeginInit();
+            this.panelCompanyFooter.SuspendLayout();
+            this.tabUser.SuspendLayout();
+            this.panelUser.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).BeginInit();
+            this.panelUserFooter.SuspendLayout();
             this.tabService.SuspendLayout();
             this.panelService.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvService)).BeginInit();
@@ -116,7 +127,8 @@ namespace wa_client.Views.Pages
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabMaster);
+            this.tabControl1.Controls.Add(this.tabCompany);
+            this.tabControl1.Controls.Add(this.tabUser);
             this.tabControl1.Controls.Add(this.tabService);
             this.tabControl1.Controls.Add(this.tabMonitor);
             this.tabControl1.Controls.Add(this.tabLog);
@@ -128,89 +140,181 @@ namespace wa_client.Views.Pages
             this.tabControl1.Size = new System.Drawing.Size(808, 587);
             this.tabControl1.TabIndex = 16;
             // 
-            // tabMaster
+            // tabCompany
             // 
-            this.tabMaster.Controls.Add(this.panelMaster);
-            this.tabMaster.Controls.Add(this.panelMasterFooter);
-            this.tabMaster.Controls.Add(this.cboMasterType);
-            this.tabMaster.Location = new System.Drawing.Point(4, 25);
-            this.tabMaster.Name = "tabMaster";
-            this.tabMaster.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMaster.Size = new System.Drawing.Size(800, 558);
-            this.tabMaster.TabIndex = 0;
-            this.tabMaster.Text = "Master";
-            this.tabMaster.UseVisualStyleBackColor = true;
+            this.tabCompany.Controls.Add(this.panelCompany);
+            this.tabCompany.Controls.Add(this.panelCompanyFooter);
+            this.tabCompany.Controls.Add(this.lblCompanyTitle);
+            this.tabCompany.Location = new System.Drawing.Point(4, 25);
+            this.tabCompany.Name = "tabCompany";
+            this.tabCompany.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCompany.Size = new System.Drawing.Size(800, 558);
+            this.tabCompany.TabIndex = 0;
+            this.tabCompany.Text = "Company";
+            this.tabCompany.UseVisualStyleBackColor = true;
             // 
-            // panelMaster
+            // panelCompany
             // 
-            this.panelMaster.Controls.Add(this.dgvMaster);
-            this.panelMaster.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMaster.Location = new System.Drawing.Point(3, 33);
-            this.panelMaster.Name = "panelMaster";
-            this.panelMaster.Size = new System.Drawing.Size(794, 475);
-            this.panelMaster.TabIndex = 2;
+            this.panelCompany.Controls.Add(this.dgvCompany);
+            this.panelCompany.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCompany.Location = new System.Drawing.Point(3, 33);
+            this.panelCompany.Name = "panelCompany";
+            this.panelCompany.Size = new System.Drawing.Size(794, 475);
+            this.panelCompany.TabIndex = 2;
             // 
-            // dgvMaster
+            // dgvCompany
             // 
-            this.dgvMaster.AllowUserToAddRows = false;
-            this.dgvMaster.AllowUserToDeleteRows = false;
-            this.dgvMaster.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMaster.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvMaster.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
-            this.dgvMaster.Location = new System.Drawing.Point(0, 0);
-            this.dgvMaster.Name = "dgvMaster";
-            this.dgvMaster.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMaster.Size = new System.Drawing.Size(794, 475);
-            this.dgvMaster.TabIndex = 0;
+            this.dgvCompany.AllowUserToAddRows = false;
+            this.dgvCompany.AllowUserToDeleteRows = false;
+            this.dgvCompany.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCompany.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCompany.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.dgvCompany.Location = new System.Drawing.Point(0, 0);
+            this.dgvCompany.Name = "dgvCompany";
+            this.dgvCompany.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCompany.Size = new System.Drawing.Size(794, 475);
+            this.dgvCompany.TabIndex = 0;
+            this.dgvCompany.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCompany_CellValueChanged);
+            this.dgvCompany.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvCompany_KeyDown);
             // 
-            // panelMasterFooter
+            // panelCompanyFooter
             // 
-            this.panelMasterFooter.Controls.Add(this.btnMasterSave);
-            this.panelMasterFooter.Controls.Add(this.btnMasterAdd);
-            this.panelMasterFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelMasterFooter.Location = new System.Drawing.Point(3, 508);
-            this.panelMasterFooter.Name = "panelMasterFooter";
-            this.panelMasterFooter.Size = new System.Drawing.Size(794, 47);
-            this.panelMasterFooter.TabIndex = 1;
+            this.panelCompanyFooter.Controls.Add(this.btnCompanySave);
+            this.panelCompanyFooter.Controls.Add(this.btnCompanyAdd);
+            this.panelCompanyFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelCompanyFooter.Location = new System.Drawing.Point(3, 508);
+            this.panelCompanyFooter.Name = "panelCompanyFooter";
+            this.panelCompanyFooter.Size = new System.Drawing.Size(794, 47);
+            this.panelCompanyFooter.TabIndex = 1;
             // 
-            // btnMasterSave
+            // btnCompanySave
             // 
-            this.btnMasterSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMasterSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.btnMasterSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMasterSave.ForeColor = System.Drawing.Color.White;
-            this.btnMasterSave.Location = new System.Drawing.Point(700, 10);
-            this.btnMasterSave.Name = "btnMasterSave";
-            this.btnMasterSave.Size = new System.Drawing.Size(90, 30);
-            this.btnMasterSave.TabIndex = 1;
-            this.btnMasterSave.Text = "Simpan";
-            this.btnMasterSave.UseVisualStyleBackColor = false;
+            this.btnCompanySave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCompanySave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.btnCompanySave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCompanySave.ForeColor = System.Drawing.Color.White;
+            this.btnCompanySave.Location = new System.Drawing.Point(700, 10);
+            this.btnCompanySave.Name = "btnCompanySave";
+            this.btnCompanySave.Size = new System.Drawing.Size(90, 30);
+            this.btnCompanySave.TabIndex = 1;
+            this.btnCompanySave.Text = "Simpan";
+            this.btnCompanySave.UseVisualStyleBackColor = false;
+            this.btnCompanySave.Click += new System.EventHandler(this.btnCompanySave_Click);
             // 
-            // btnMasterAdd
+            // btnCompanyAdd
             // 
-            this.btnMasterAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnMasterAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
-            this.btnMasterAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMasterAdd.ForeColor = System.Drawing.Color.White;
-            this.btnMasterAdd.Location = new System.Drawing.Point(10, 10);
-            this.btnMasterAdd.Name = "btnMasterAdd";
-            this.btnMasterAdd.Size = new System.Drawing.Size(90, 30);
-            this.btnMasterAdd.TabIndex = 0;
-            this.btnMasterAdd.Text = "+ Tambah";
-            this.btnMasterAdd.UseVisualStyleBackColor = false;
+            this.btnCompanyAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCompanyAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.btnCompanyAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCompanyAdd.ForeColor = System.Drawing.Color.White;
+            this.btnCompanyAdd.Location = new System.Drawing.Point(10, 10);
+            this.btnCompanyAdd.Name = "btnCompanyAdd";
+            this.btnCompanyAdd.Size = new System.Drawing.Size(90, 30);
+            this.btnCompanyAdd.TabIndex = 0;
+            this.btnCompanyAdd.Text = "+ Tambah";
+            this.btnCompanyAdd.UseVisualStyleBackColor = false;
+            this.btnCompanyAdd.Click += new System.EventHandler(this.btnCompanyAdd_Click);
             // 
-            // cboMasterType
+            // lblCompanyTitle
             // 
-            this.cboMasterType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.cboMasterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMasterType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular);
-            this.cboMasterType.Items.AddRange(new object[] {
-            "Company",
-            "User"});
-            this.cboMasterType.Location = new System.Drawing.Point(3, 3);
-            this.cboMasterType.Name = "cboMasterType";
-            this.cboMasterType.Size = new System.Drawing.Size(794, 24);
-            this.cboMasterType.TabIndex = 0;
+            this.lblCompanyTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblCompanyTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblCompanyTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblCompanyTitle.Location = new System.Drawing.Point(3, 3);
+            this.lblCompanyTitle.Name = "lblCompanyTitle";
+            this.lblCompanyTitle.Padding = new System.Windows.Forms.Padding(5, 3, 0, 0);
+            this.lblCompanyTitle.Size = new System.Drawing.Size(794, 30);
+            this.lblCompanyTitle.TabIndex = 3;
+            this.lblCompanyTitle.Text = "Company Management";
+            this.lblCompanyTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tabUser
+            // 
+            this.tabUser.Controls.Add(this.panelUser);
+            this.tabUser.Controls.Add(this.panelUserFooter);
+            this.tabUser.Controls.Add(this.lblUserTitle);
+            this.tabUser.Location = new System.Drawing.Point(4, 25);
+            this.tabUser.Name = "tabUser";
+            this.tabUser.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUser.Size = new System.Drawing.Size(800, 558);
+            this.tabUser.TabIndex = 4;
+            this.tabUser.Text = "User";
+            this.tabUser.UseVisualStyleBackColor = true;
+            // 
+            // panelUser
+            // 
+            this.panelUser.Controls.Add(this.dgvUser);
+            this.panelUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelUser.Location = new System.Drawing.Point(3, 33);
+            this.panelUser.Name = "panelUser";
+            this.panelUser.Size = new System.Drawing.Size(794, 475);
+            this.panelUser.TabIndex = 2;
+            // 
+            // dgvUser
+            // 
+            this.dgvUser.AllowUserToAddRows = false;
+            this.dgvUser.AllowUserToDeleteRows = false;
+            this.dgvUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvUser.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+            this.dgvUser.Location = new System.Drawing.Point(0, 0);
+            this.dgvUser.Name = "dgvUser";
+            this.dgvUser.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvUser.Size = new System.Drawing.Size(794, 475);
+            this.dgvUser.TabIndex = 0;
+            this.dgvUser.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvUser_CellValueChanged);
+            this.dgvUser.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvUser_KeyDown);
+            // 
+            // panelUserFooter
+            // 
+            this.panelUserFooter.Controls.Add(this.btnUserSave);
+            this.panelUserFooter.Controls.Add(this.btnUserAdd);
+            this.panelUserFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelUserFooter.Location = new System.Drawing.Point(3, 508);
+            this.panelUserFooter.Name = "panelUserFooter";
+            this.panelUserFooter.Size = new System.Drawing.Size(794, 47);
+            this.panelUserFooter.TabIndex = 1;
+            // 
+            // btnUserSave
+            // 
+            this.btnUserSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUserSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.btnUserSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUserSave.ForeColor = System.Drawing.Color.White;
+            this.btnUserSave.Location = new System.Drawing.Point(700, 10);
+            this.btnUserSave.Name = "btnUserSave";
+            this.btnUserSave.Size = new System.Drawing.Size(90, 30);
+            this.btnUserSave.TabIndex = 1;
+            this.btnUserSave.Text = "Simpan";
+            this.btnUserSave.UseVisualStyleBackColor = false;
+            this.btnUserSave.Click += new System.EventHandler(this.btnUserSave_Click);
+            // 
+            // btnUserAdd
+            // 
+            this.btnUserAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnUserAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.btnUserAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUserAdd.ForeColor = System.Drawing.Color.White;
+            this.btnUserAdd.Location = new System.Drawing.Point(10, 10);
+            this.btnUserAdd.Name = "btnUserAdd";
+            this.btnUserAdd.Size = new System.Drawing.Size(90, 30);
+            this.btnUserAdd.TabIndex = 0;
+            this.btnUserAdd.Text = "+ Tambah";
+            this.btnUserAdd.UseVisualStyleBackColor = false;
+            this.btnUserAdd.Click += new System.EventHandler(this.btnUserAdd_Click);
+            // 
+            // lblUserTitle
+            // 
+            this.lblUserTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblUserTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold);
+            this.lblUserTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lblUserTitle.Location = new System.Drawing.Point(3, 3);
+            this.lblUserTitle.Name = "lblUserTitle";
+            this.lblUserTitle.Padding = new System.Windows.Forms.Padding(5, 3, 0, 0);
+            this.lblUserTitle.Size = new System.Drawing.Size(794, 30);
+            this.lblUserTitle.TabIndex = 3;
+            this.lblUserTitle.Text = "User Management";
+            this.lblUserTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tabService
             // 
@@ -244,29 +348,17 @@ namespace wa_client.Views.Pages
             this.dgvService.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvService.Size = new System.Drawing.Size(794, 503);
             this.dgvService.TabIndex = 0;
+            this.dgvService.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvService_CellFormatting);
             // 
             // panelServiceFooter
             // 
-            this.panelServiceFooter.Controls.Add(this.btnServiceSync);
             this.panelServiceFooter.Controls.Add(this.btnServiceRefresh);
+            this.panelServiceFooter.Controls.Add(this.btnServiceSync);
             this.panelServiceFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelServiceFooter.Location = new System.Drawing.Point(3, 506);
             this.panelServiceFooter.Name = "panelServiceFooter";
             this.panelServiceFooter.Size = new System.Drawing.Size(794, 49);
             this.panelServiceFooter.TabIndex = 1;
-            // 
-            // btnServiceSync
-            // 
-            this.btnServiceSync.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnServiceSync.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
-            this.btnServiceSync.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnServiceSync.ForeColor = System.Drawing.Color.White;
-            this.btnServiceSync.Location = new System.Drawing.Point(10, 10);
-            this.btnServiceSync.Name = "btnServiceSync";
-            this.btnServiceSync.Size = new System.Drawing.Size(120, 30);
-            this.btnServiceSync.TabIndex = 1;
-            this.btnServiceSync.Text = "Sync from Meta";
-            this.btnServiceSync.UseVisualStyleBackColor = false;
             // 
             // btnServiceRefresh
             // 
@@ -280,6 +372,21 @@ namespace wa_client.Views.Pages
             this.btnServiceRefresh.TabIndex = 0;
             this.btnServiceRefresh.Text = "Refresh";
             this.btnServiceRefresh.UseVisualStyleBackColor = false;
+            this.btnServiceRefresh.Click += new System.EventHandler(this.btnServiceRefresh_Click);
+            // 
+            // btnServiceSync
+            // 
+            this.btnServiceSync.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnServiceSync.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(193)))), ((int)(((byte)(7)))));
+            this.btnServiceSync.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServiceSync.ForeColor = System.Drawing.Color.White;
+            this.btnServiceSync.Location = new System.Drawing.Point(10, 10);
+            this.btnServiceSync.Name = "btnServiceSync";
+            this.btnServiceSync.Size = new System.Drawing.Size(120, 30);
+            this.btnServiceSync.TabIndex = 1;
+            this.btnServiceSync.Text = "Sync from Meta";
+            this.btnServiceSync.UseVisualStyleBackColor = false;
+            this.btnServiceSync.Click += new System.EventHandler(this.btnServiceSync_Click);
             // 
             // tabMonitor
             // 
@@ -345,10 +452,14 @@ namespace wa_client.Views.Pages
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabMaster.ResumeLayout(false);
-            this.panelMaster.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvMaster)).EndInit();
-            this.panelMasterFooter.ResumeLayout(false);
+            this.tabCompany.ResumeLayout(false);
+            this.panelCompany.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCompany)).EndInit();
+            this.panelCompanyFooter.ResumeLayout(false);
+            this.tabUser.ResumeLayout(false);
+            this.panelUser.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).EndInit();
+            this.panelUserFooter.ResumeLayout(false);
             this.tabService.ResumeLayout(false);
             this.panelService.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvService)).EndInit();
@@ -364,23 +475,30 @@ namespace wa_client.Views.Pages
         private System.Windows.Forms.Label lblOutBelum;
         private System.Windows.Forms.Label lblOutGagal;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabMaster;
+        private System.Windows.Forms.TabPage tabCompany;
+        private System.Windows.Forms.TabPage tabUser;
         private System.Windows.Forms.TabPage tabService;
         private System.Windows.Forms.TabPage tabMonitor;
         private System.Windows.Forms.TabPage tabLog;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage inboxPage;
         private System.Windows.Forms.TabPage outboxPage;
-        private System.Windows.Forms.ComboBox cboMasterType;
-        private System.Windows.Forms.DataGridView dgvMaster;
-        private System.Windows.Forms.Panel panelMaster;
-        private System.Windows.Forms.Panel panelMasterFooter;
-        private System.Windows.Forms.Button btnMasterSave;
-        private System.Windows.Forms.Button btnMasterAdd;
+        private System.Windows.Forms.DataGridView dgvCompany;
+        private System.Windows.Forms.Panel panelCompany;
+        private System.Windows.Forms.Panel panelCompanyFooter;
+        private System.Windows.Forms.Button btnCompanySave;
+        private System.Windows.Forms.Button btnCompanyAdd;
+        private System.Windows.Forms.Label lblCompanyTitle;
+        private System.Windows.Forms.DataGridView dgvUser;
+        private System.Windows.Forms.Panel panelUser;
+        private System.Windows.Forms.Panel panelUserFooter;
+        private System.Windows.Forms.Button btnUserSave;
+        private System.Windows.Forms.Button btnUserAdd;
+        private System.Windows.Forms.Label lblUserTitle;
         private System.Windows.Forms.Panel panelService;
         private System.Windows.Forms.DataGridView dgvService;
         private System.Windows.Forms.Panel panelServiceFooter;
-        private System.Windows.Forms.Button btnServiceSync;
         private System.Windows.Forms.Button btnServiceRefresh;
+        private System.Windows.Forms.Button btnServiceSync;
     }
 }

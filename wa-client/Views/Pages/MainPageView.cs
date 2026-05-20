@@ -13,42 +13,18 @@ namespace wa_client.Views.Pages
         private List<Company> _companies = new List<Company>();
         private List<User> _users = new List<User>();
         private List<PhoneNumber> _phones = new List<PhoneNumber>();
-        private bool _isCompanyMode = true;
 
         public MainPageView()
         {
             InitializeComponent();
-            cboMasterType.SelectedIndexChanged += CboMasterType_SelectedIndexChanged;
-            dgvMaster.CellValueChanged += DgvMaster_CellValueChanged;
-            dgvMaster.KeyDown += DgvMaster_KeyDown;
-            dgvService.CellFormatting += DgvService_CellFormatting;
-            btnMasterAdd.Click += BtnMasterAdd_Click;
-            btnMasterSave.Click += BtnMasterSave_Click;
-            btnServiceRefresh.Click += BtnServiceRefresh_Click;
-            btnServiceSync.Click += BtnServiceSync_Click;
-            cboMasterType.SelectedIndex = 0;
-            LoadMasterData();
-            LoadServiceData();
-        }
-
-        private void CboMasterType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _isCompanyMode = cboMasterType.SelectedItem?.ToString() == "Company";
-            LoadMasterData();
+            LoadData();
         }
 
         public void LoadData()
         {
-            LoadMasterData();
+            LoadCompanies();
+            LoadUsers();
             LoadServiceData();
-        }
-
-        private void LoadMasterData()
-        {
-            if (_isCompanyMode)
-                LoadCompanies();
-            else
-                LoadUsers();
         }
 
         private void LoadCompanies()
@@ -57,9 +33,9 @@ namespace wa_client.Views.Pages
             if (response.Success && response.Data != null)
             {
                 _companies = response.Data;
-                dgvMaster.DataSource = null;
-                dgvMaster.DataSource = _companies;
-                UpdateMasterRowColors();
+                dgvCompany.DataSource = null;
+                dgvCompany.DataSource = _companies;
+                UpdateRowColors(dgvCompany, _companies.Cast<object>());
             }
         }
 
@@ -69,9 +45,9 @@ namespace wa_client.Views.Pages
             if (response.Success && response.Data != null)
             {
                 _users = response.Data;
-                dgvMaster.DataSource = null;
-                dgvMaster.DataSource = _users;
-                UpdateMasterRowColors();
+                dgvUser.DataSource = null;
+                dgvUser.DataSource = _users;
+                UpdateRowColors(dgvUser, _users.Cast<object>());
             }
         }
 
@@ -87,35 +63,21 @@ namespace wa_client.Views.Pages
             }
         }
 
-        private void UpdateMasterRowColors()
+        private void UpdateRowColors(DataGridView dgv, IEnumerable<object> items)
         {
-            for (int i = 0; i < dgvMaster.Rows.Count; i++)
+            int i = 0;
+            foreach (var item in items)
             {
-                object item = dgvMaster.Rows[i].DataBoundItem;
-                if (item == null) continue;
+                if (i >= dgv.Rows.Count) break;
 
-                if (_isCompanyMode)
-                {
-                    var c = item as Company;
-                    if (c == null) continue;
-                    if (c.IsDeleted)
-                        dgvMaster.Rows[i].DefaultCellStyle.BackColor = Color.LightPink;
-                    else if (c.IsDirty)
-                        dgvMaster.Rows[i].DefaultCellStyle.BackColor = Color.LightYellow;
-                    else
-                        dgvMaster.Rows[i].DefaultCellStyle.BackColor = Color.White;
-                }
+                dynamic obj = item;
+                if (obj.IsDeleted)
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.LightPink;
+                else if (obj.IsDirty)
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.LightYellow;
                 else
-                {
-                    var u = item as User;
-                    if (u == null) continue;
-                    if (u.IsDeleted)
-                        dgvMaster.Rows[i].DefaultCellStyle.BackColor = Color.LightPink;
-                    else if (u.IsDirty)
-                        dgvMaster.Rows[i].DefaultCellStyle.BackColor = Color.LightYellow;
-                    else
-                        dgvMaster.Rows[i].DefaultCellStyle.BackColor = Color.White;
-                }
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                i++;
             }
         }
 
@@ -137,7 +99,7 @@ namespace wa_client.Views.Pages
             }
         }
 
-        private void DgvService_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void dgvService_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dgvService.Columns[e.ColumnIndex].DataPropertyName == "IsActive")
             {
@@ -146,84 +108,62 @@ namespace wa_client.Views.Pages
             }
         }
 
-        private void DgvMaster_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dgvCompany_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
-
-            object item = dgvMaster.Rows[e.RowIndex].DataBoundItem;
-            if (item == null) return;
-
-            if (_isCompanyMode)
-            {
-                var c = item as Company;
-                if (c != null && !c.IsNew) c.IsDirty = true;
-            }
-            else
-            {
-                var u = item as User;
-                if (u != null && !u.IsNew) u.IsDirty = true;
-            }
-            UpdateMasterRowColors();
+            var c = dgvCompany.Rows[e.RowIndex].DataBoundItem as Company;
+            if (c != null && !c.IsNew) c.IsDirty = true;
+            UpdateRowColors(dgvCompany, _companies);
         }
 
-        private void DgvMaster_KeyDown(object sender, KeyEventArgs e)
+        private void dgvCompany_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete && dgvMaster.CurrentRow != null)
+            if (e.KeyCode == Keys.Delete && dgvCompany.CurrentRow != null)
             {
-                object item = dgvMaster.CurrentRow.DataBoundItem;
-                if (item is Company c) c.IsDeleted = !c.IsDeleted;
-                else if (item is User u) u.IsDeleted = !u.IsDeleted;
-                UpdateMasterRowColors();
+                var c = dgvCompany.CurrentRow.DataBoundItem as Company;
+                if (c != null) c.IsDeleted = !c.IsDeleted;
+                UpdateRowColors(dgvCompany, _companies);
             }
         }
 
-        private void BtnMasterAdd_Click(object sender, EventArgs e)
+        private void dgvUser_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (_isCompanyMode)
-            {
-                var newCompany = new Company
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "New Company",
-                    Code = "NEW",
-                    IsActive = true,
-                    QuotaLimit = 1000,
-                    IsNew = true,
-                    IsDirty = true
-                };
-                _companies.Add(newCompany);
-                RefreshMasterGrid();
-                if (dgvMaster.Rows.Count > 0)
-                    dgvMaster.CurrentCell = dgvMaster.Rows[_companies.Count - 1].Cells[1];
-            }
-            else
-            {
-                var newUser = new User
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Email = "new@user.com",
-                    Name = "New User",
-                    Role = "cs",
-                    IsActive = true,
-                    IsNew = true,
-                    IsDirty = true
-                };
-                _users.Add(newUser);
-                RefreshMasterGrid();
-                if (dgvMaster.Rows.Count > 0)
-                    dgvMaster.CurrentCell = dgvMaster.Rows[_users.Count - 1].Cells[1];
-            }
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+            var u = dgvUser.Rows[e.RowIndex].DataBoundItem as User;
+            if (u != null && !u.IsNew) u.IsDirty = true;
+            UpdateRowColors(dgvUser, _users);
         }
 
-        private void BtnMasterSave_Click(object sender, EventArgs e)
+        private void dgvUser_KeyDown(object sender, KeyEventArgs e)
         {
-            if (_isCompanyMode)
-                SaveCompanies();
-            else
-                SaveUsers();
+            if (e.KeyCode == Keys.Delete && dgvUser.CurrentRow != null)
+            {
+                var u = dgvUser.CurrentRow.DataBoundItem as User;
+                if (u != null) u.IsDeleted = !u.IsDeleted;
+                UpdateRowColors(dgvUser, _users);
+            }
         }
 
-        private void SaveCompanies()
+        private void btnCompanyAdd_Click(object sender, EventArgs e)
+        {
+            _companies.Add(new Company
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "New Company",
+                Code = "NEW",
+                IsActive = true,
+                QuotaLimit = 1000,
+                IsNew = true,
+                IsDirty = true
+            });
+            dgvCompany.DataSource = null;
+            dgvCompany.DataSource = _companies;
+            UpdateRowColors(dgvCompany, _companies);
+            if (dgvCompany.Rows.Count > 0)
+                dgvCompany.CurrentCell = dgvCompany.Rows[_companies.Count - 1].Cells[1];
+        }
+
+        private void btnCompanySave_Click(object sender, EventArgs e)
         {
             foreach (var c in _companies.Where(c => c.IsDirty || c.IsNew || c.IsDeleted))
             {
@@ -237,7 +177,26 @@ namespace wa_client.Views.Pages
             LoadCompanies();
         }
 
-        private void SaveUsers()
+        private void btnUserAdd_Click(object sender, EventArgs e)
+        {
+            _users.Add(new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Email = "new@user.com",
+                Name = "New User",
+                Role = "cs",
+                IsActive = true,
+                IsNew = true,
+                IsDirty = true
+            });
+            dgvUser.DataSource = null;
+            dgvUser.DataSource = _users;
+            UpdateRowColors(dgvUser, _users);
+            if (dgvUser.Rows.Count > 0)
+                dgvUser.CurrentCell = dgvUser.Rows[_users.Count - 1].Cells[1];
+        }
+
+        private void btnUserSave_Click(object sender, EventArgs e)
         {
             foreach (var u in _users.Where(u => u.IsDirty || u.IsNew || u.IsDeleted))
             {
@@ -251,12 +210,12 @@ namespace wa_client.Views.Pages
             LoadUsers();
         }
 
-        private void BtnServiceRefresh_Click(object sender, EventArgs e)
+        private void btnServiceRefresh_Click(object sender, EventArgs e)
         {
             LoadServiceData();
         }
 
-        private void BtnServiceSync_Click(object sender, EventArgs e)
+        private void btnServiceSync_Click(object sender, EventArgs e)
         {
             var result = ApiClient.Instance.Post<object>("/api/v1/phone-numbers/sync", null);
             if (result.Success)
@@ -266,20 +225,5 @@ namespace wa_client.Views.Pages
             LoadServiceData();
         }
 
-        public void SelectMasterTab(string type)
-        {
-            tabControl1.SelectedTab = tabMaster;
-            if (type == "Company")
-                cboMasterType.SelectedIndex = 0;
-            else if (type == "User")
-                cboMasterType.SelectedIndex = 1;
-        }
-
-        private void RefreshMasterGrid()
-        {
-            dgvMaster.DataSource = null;
-            dgvMaster.DataSource = _isCompanyMode ? (object)_companies : _users;
-            UpdateMasterRowColors();
-        }
     }
 }
