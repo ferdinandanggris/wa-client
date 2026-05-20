@@ -1,0 +1,304 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using wa_client.Models;
+using wa_client.Services;
+using wa_client.Views;
+
+namespace wa_client.Forms
+{
+    public partial class MainForm : Form
+    {
+        private UserControl currentView;
+        private TreeNode phoneNode;
+
+        public MainForm()
+        {
+            InitializeComponent();
+            InitializeTreeView();
+            LoadInitialView();
+        }
+
+        private void InitializeTreeView()
+        {
+            TreeNode nodeDashboard = new TreeNode("Dashboard");
+            nodeDashboard.Tag = "dashboard";
+            nodeDashboard.ImageIndex = 0;
+            nodeDashboard.SelectedImageIndex = 0;
+
+            TreeNode nodeCompany = new TreeNode("Company");
+            nodeCompany.Tag = "company";
+            nodeCompany.ImageIndex = 1;
+            nodeCompany.SelectedImageIndex = 1;
+
+            TreeNode nodeUser = new TreeNode("User");
+            nodeUser.Tag = "user";
+            nodeUser.ImageIndex = 2;
+            nodeUser.SelectedImageIndex = 2;
+
+            phoneNode = new TreeNode("Phone Number");
+            phoneNode.Tag = "phone";
+            phoneNode.ImageIndex = 3;
+            phoneNode.SelectedImageIndex = 3;
+
+            LoadPhoneNumbersToTree();
+
+            TreeNode nodeAnalytics = new TreeNode("Analytics");
+            nodeAnalytics.Tag = "analytics";
+            nodeAnalytics.ImageIndex = 4;
+            nodeAnalytics.SelectedImageIndex = 4;
+
+            tvMenu.Nodes.Add(nodeDashboard);
+            tvMenu.Nodes.Add(nodeCompany);
+            tvMenu.Nodes.Add(nodeUser);
+            tvMenu.Nodes.Add(phoneNode);
+            tvMenu.Nodes.Add(nodeAnalytics);
+
+            phoneNode.Expand();
+        }
+
+        private void LoadPhoneNumbersToTree()
+        {
+            phoneNode.Nodes.Clear();
+
+            var response = ApiClient.Instance.Get<PhoneNumberListResponse>("/api/v1/phone-numbers");
+            if (response.Success && response.Data != null)
+            {
+                foreach (var phone in response.Data)
+                {
+                    string displayText = phone.PhoneNumberVal + " " + (phone.IsActive ? "●" : "○");
+                    TreeNode nodePhone = new TreeNode(displayText);
+                    nodePhone.Tag = phone;
+                    nodePhone.ImageIndex = 3;
+                    nodePhone.SelectedImageIndex = 3;
+                    phoneNode.Nodes.Add(nodePhone);
+                }
+            }
+        }
+
+        private void LoadInitialView()
+        {
+            ShowView("dashboard");
+        }
+
+        private void tvMenu_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                tvMenu.SelectedNode = e.Node;
+
+                // Single click - expand/collapse parent nodes only
+                if (e.Node.Level == 0)
+                {
+                    if (e.Node.IsExpanded)
+                        e.Node.Collapse();
+                    else
+                        e.Node.Expand();
+                }
+
+                // For top level menu items, show view
+                if (e.Node.Level == 0 && e.Node.Tag != null)
+                {
+                    string tag = e.Node.Tag.ToString();
+                    if (tag != "phone")
+                    {
+                        ShowView(tag);
+                    }
+                }
+                else if (e.Node.Level == 1 && e.Node.Parent.Tag?.ToString() == "phone")
+                {
+                    ShowView("phone");
+                }
+            }
+        }
+
+        private void tvMenu_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Level == 1 && e.Node.Parent.Tag?.ToString() == "phone")
+            {
+                var phone = e.Node.Tag as PhoneNumber;
+                if (phone != null)
+                {
+                    ShowPhoneDetail(phone);
+                }
+            }
+            else if (e.Node.Level == 0 && e.Node.Tag?.ToString() != "phone")
+            {
+                string tag = e.Node.Tag?.ToString();
+                ShowView(tag);
+            }
+        }
+
+        private void ShowPhoneDetail(PhoneNumber phone)
+        {
+            if (currentView != null)
+            {
+                panelContent.Controls.Remove(currentView);
+                currentView.Dispose();
+            }
+
+            var detailView = new PhoneDetailView(phone);
+            detailView.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(detailView);
+            currentView = detailView;
+            lblTitle.Text = $"Phone: {phone.PhoneNumberVal}";
+        }
+
+        private void tvMenu_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                TreeNode node = tvMenu.GetNodeAt(e.X, e.Y);
+                if (node != null)
+                {
+                    tvMenu.SelectedNode = node;
+                    ShowContextMenu(node, e.Location);
+                }
+            }
+        }
+
+        private void ShowContextMenu(TreeNode node, Point location)
+        {
+            ContextMenuStrip cms = new ContextMenuStrip();
+
+            if (node.Level == 0)
+            {
+                switch (node.Tag?.ToString())
+                {
+                    case "company":
+                        cms.Items.Add("Add Company", null, (s, e) => ShowView("company"));
+                        break;
+                    case "user":
+                        cms.Items.Add("Add User", null, (s, e) => ShowView("user"));
+                        break;
+                    case "phone":
+                        cms.Items.Add("Sync from Meta", null, (s, e) => SyncPhoneNumbers());
+                        cms.Items.Add("Refresh", null, (s, e) => RefreshPhoneNumbers());
+                        break;
+                }
+            }
+            else if (node.Level == 1)
+            {
+                if (node.Parent.Tag?.ToString() == "phone")
+                {
+                    var phone = node.Tag as PhoneNumber;
+                    if (phone != null)
+                    {
+                        cms.Items.Add("View Detail", null, (s, e) => ShowPhoneDetail(phone));
+                        cms.Items.Add("Edit", null, (s, e) => MessageBox.Show($"Edit: {phone.PhoneNumberVal}"));
+                        cms.Items.Add(new ToolStripSeparator());
+                        cms.Items.Add("Assign to Company", null, (s, e) => MessageBox.Show($"Assign: {phone.PhoneNumberVal}"));
+                        cms.Items.Add("Update Profile", null, (s, e) => MessageBox.Show($"Profile: {phone.PhoneNumberVal}"));
+                    }
+                }
+            }
+
+            if (cms.Items.Count > 0)
+            {
+                cms.Show(tvMenu, location);
+            }
+        }
+
+        private void ShowView(string viewName)
+        {
+            if (currentView != null)
+            {
+                panelContent.Controls.Remove(currentView);
+                currentView.Dispose();
+            }
+
+            switch (viewName)
+            {
+                case "dashboard":
+                    currentView = new DashboardView();
+                    break;
+                case "company":
+                    currentView = new CompanyView();
+                    break;
+                case "user":
+                    currentView = new UserView();
+                    break;
+                case "phone":
+                    currentView = new PhoneNumberView();
+                    break;
+                case "analytics":
+                    currentView = new AnalyticsView();
+                    break;
+                default:
+                    currentView = new DashboardView();
+                    break;
+            }
+
+            currentView.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(currentView);
+            lblTitle.Text = GetTitleForView(viewName);
+        }
+
+        private string GetTitleForView(string viewName)
+        {
+            switch (viewName)
+            {
+                case "dashboard": return "Dashboard";
+                case "company": return "Company Management";
+                case "user": return "User Management";
+                case "phone": return "Phone Number Management";
+                case "analytics": return "Analytics";
+                default: return "WA Gateway Admin";
+            }
+        }
+
+        private void SyncPhoneNumbers()
+        {
+            MessageBox.Show("Syncing phone numbers from Meta...", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void RefreshPhoneNumbers()
+        {
+            LoadPhoneNumbersToTree();
+            phoneNode.Expand();
+            MessageBox.Show("Phone numbers refreshed!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            if (currentView != null)
+            {
+                if (currentView is CompanyView)
+                    ((CompanyView)currentView).LoadData();
+                else if (currentView is UserView)
+                    ((UserView)currentView).LoadData();
+                else if (currentView is PhoneNumberView)
+                    ((PhoneNumberView)currentView).LoadData();
+            }
+            RefreshPhoneNumbers();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                AuthService.Instance.Logout();
+                this.Hide();
+                var loginForm = new LoginForm();
+                loginForm.ShowDialog();
+                this.Close();
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.F5)
+            {
+                btnRefresh_Click(null, null);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+    }
+
+    public class PhoneNumberListResponse : List<PhoneNumber> { }
+}
