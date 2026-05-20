@@ -179,6 +179,7 @@ namespace wa_client.Views.Pages
             // 
             // panelCompanyFooter
             // 
+            this.panelCompanyFooter.Controls.Add(this.btnCompanyRefresh);
             this.panelCompanyFooter.Controls.Add(this.btnCompanySave);
             this.panelCompanyFooter.Controls.Add(this.btnCompanyAdd);
             this.panelCompanyFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -200,6 +201,19 @@ namespace wa_client.Views.Pages
             this.btnCompanySave.Text = "Simpan";
             this.btnCompanySave.UseVisualStyleBackColor = false;
             this.btnCompanySave.Click += new System.EventHandler(this.btnCompanySave_Click);
+            // 
+            // btnCompanyRefresh
+            // 
+            this.btnCompanyRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCompanyRefresh.BackColor = System.Drawing.Color.White;
+            this.btnCompanyRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCompanyRefresh.Location = new System.Drawing.Point(600, 10);
+            this.btnCompanyRefresh.Name = "btnCompanyRefresh";
+            this.btnCompanyRefresh.Size = new System.Drawing.Size(90, 30);
+            this.btnCompanyRefresh.TabIndex = 2;
+            this.btnCompanyRefresh.Text = "F5 - Refresh";
+            this.btnCompanyRefresh.UseVisualStyleBackColor = false;
+            this.btnCompanyRefresh.Click += new System.EventHandler(this.btnCompanyRefresh_Click);
             // 
             // btnCompanyAdd
             // 
@@ -267,6 +281,7 @@ namespace wa_client.Views.Pages
             // 
             // panelUserFooter
             // 
+            this.panelUserFooter.Controls.Add(this.btnUserRefresh);
             this.panelUserFooter.Controls.Add(this.btnUserSave);
             this.panelUserFooter.Controls.Add(this.btnUserAdd);
             this.panelUserFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -288,6 +303,19 @@ namespace wa_client.Views.Pages
             this.btnUserSave.Text = "Simpan";
             this.btnUserSave.UseVisualStyleBackColor = false;
             this.btnUserSave.Click += new System.EventHandler(this.btnUserSave_Click);
+            // 
+            // btnUserRefresh
+            // 
+            this.btnUserRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUserRefresh.BackColor = System.Drawing.Color.White;
+            this.btnUserRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUserRefresh.Location = new System.Drawing.Point(600, 10);
+            this.btnUserRefresh.Name = "btnUserRefresh";
+            this.btnUserRefresh.Size = new System.Drawing.Size(90, 30);
+            this.btnUserRefresh.TabIndex = 2;
+            this.btnUserRefresh.Text = "F5 - Refresh";
+            this.btnUserRefresh.UseVisualStyleBackColor = false;
+            this.btnUserRefresh.Click += new System.EventHandler(this.btnUserRefresh_Click);
             // 
             // btnUserAdd
             // 
@@ -325,7 +353,7 @@ namespace wa_client.Views.Pages
             this.tabService.Padding = new System.Windows.Forms.Padding(3);
             this.tabService.Size = new System.Drawing.Size(800, 558);
             this.tabService.TabIndex = 1;
-            this.tabService.Text = "Service";
+            this.tabService.Text = "Phone Numbers";
             this.tabService.UseVisualStyleBackColor = true;
             // 
             // panelService
@@ -488,12 +516,14 @@ namespace wa_client.Views.Pages
         private System.Windows.Forms.Panel panelCompanyFooter;
         private System.Windows.Forms.Button btnCompanySave;
         private System.Windows.Forms.Button btnCompanyAdd;
+        private System.Windows.Forms.Button btnCompanyRefresh;
         private System.Windows.Forms.Label lblCompanyTitle;
         private System.Windows.Forms.DataGridView dgvUser;
         private System.Windows.Forms.Panel panelUser;
         private System.Windows.Forms.Panel panelUserFooter;
         private System.Windows.Forms.Button btnUserSave;
         private System.Windows.Forms.Button btnUserAdd;
+        private System.Windows.Forms.Button btnUserRefresh;
         private System.Windows.Forms.Label lblUserTitle;
         private System.Windows.Forms.Panel panelService;
         private System.Windows.Forms.DataGridView dgvService;

@@ -143,7 +143,6 @@ namespace wa_client.Forms
             detailView.Dock = DockStyle.Fill;
             panelContent.Controls.Add(detailView);
             currentView = detailView;
-            lblTitle.Text = $"Phone: {phone.PhoneNumberVal}";
             SetStatus("Viewing phone detail");
         }
 
@@ -235,20 +234,7 @@ namespace wa_client.Forms
                 currentView.Dock = DockStyle.Fill;
                 panelContent.Controls.Add(currentView);
             }
-            lblTitle.Text = GetTitleForView(viewName);
             SetStatus("Ready");
-        }
-
-        private string GetTitleForView(string viewName)
-        {
-            switch (viewName)
-            {
-                case "dashboard": return "Dashboard";
-                case "main": return "Company Management";
-                case "phone": return "Service";
-                case "analytics": return "Analytics";
-                default: return "WA Gateway Admin";
-            }
         }
 
         private void SyncPhoneNumbers()
@@ -270,34 +256,6 @@ namespace wa_client.Forms
         private void SetStatus(string message)
         {
             lblStatus.Text = message;
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            SetStatus("Refreshing...");
-            if (currentView != null)
-            {
-                if (currentView is MainPageView mainPage)
-                    mainPage.LoadData();
-                else if (currentView is DashboardView db)
-                    db.LoadData();
-            }
-            RefreshPhoneNumbers();
-            SetStatus("Ready");
-        }
-
-        private void btnLogout_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                AuthService.Instance.Logout();
-                this.Hide();
-                var loginForm = new LoginForm();
-                loginForm.ShowDialog();
-                this.Close();
-            }
         }
 
         private void btnCollapseLeft_Click(object sender, EventArgs e)
@@ -325,10 +283,6 @@ namespace wa_client.Forms
                 panelSidebarTop.Visible = false;
                 tvMenu.Visible = false;
                 sidebarExpanded = false;
-                
-                panelHeader.Left = SidebarCollapsedWidth;
-                panelContent.Left = SidebarCollapsedWidth;
-                statusStrip.Left = SidebarCollapsedWidth;
             }
         }
 
@@ -340,10 +294,20 @@ namespace wa_client.Forms
                 panelSidebarTop.Visible = true;
                 tvMenu.Visible = true;
                 sidebarExpanded = true;
-                
-                panelHeader.Left = SidebarExpandedWidth;
-                panelContent.Left = SidebarExpandedWidth;
-                statusStrip.Left = SidebarExpandedWidth;
+            }
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                AuthService.Instance.Logout();
+                this.Hide();
+                var loginForm = new LoginForm();
+                loginForm.ShowDialog();
+                this.Close();
             }
         }
 
@@ -354,9 +318,14 @@ namespace wa_client.Forms
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.F5)
+            if (keyData == Keys.F5 && currentView is MainPageView mainPage)
             {
-                btnRefresh_Click(null, null);
+                mainPage.LoadData();
+                return true;
+            }
+            if (keyData == Keys.F5 && currentView is DashboardView db)
+            {
+                db.LoadData();
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);

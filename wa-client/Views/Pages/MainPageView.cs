@@ -210,6 +210,16 @@ namespace wa_client.Views.Pages
             LoadUsers();
         }
 
+        private void btnCompanyRefresh_Click(object sender, EventArgs e)
+        {
+            LoadCompanies();
+        }
+
+        private void btnUserRefresh_Click(object sender, EventArgs e)
+        {
+            LoadUsers();
+        }
+
         private void btnServiceRefresh_Click(object sender, EventArgs e)
         {
             LoadServiceData();
