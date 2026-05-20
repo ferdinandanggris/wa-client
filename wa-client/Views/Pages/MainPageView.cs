@@ -101,9 +101,9 @@ namespace wa_client.Views.Pages
 
         private void dgvService_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dgvService.Columns[e.ColumnIndex].DataPropertyName == "IsActive")
+            if (dgvService.Columns[e.ColumnIndex].DataPropertyName == "IsActive" && e.Value is bool active)
             {
-                e.Value = (bool)e.Value ? "Active" : "Inactive";
+                e.Value = active ? "Active" : "Inactive";
                 e.FormattingApplied = true;
             }
         }
