@@ -88,20 +88,27 @@ namespace wa_client.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = JsonConvert.DeserializeObject<ApiResponseWrapper<T>>(body);
-                    if (result != null && result.Ok)
+                    try
                     {
-                        return new ApiResponse<T> { Success = true, Data = result.Data };
+                        var result = JsonConvert.DeserializeObject<ApiResponseWrapper<T>>(body);
+                        if (result != null && result.Ok)
+                        {
+                            return new ApiResponse<T> { Success = true, Data = result.Data };
+                        }
+                        else if (result != null && result.Error != null)
+                        {
+                            return new ApiResponse<T> 
+                            { 
+                                Success = false, 
+                                ErrorMessage = result.Error.Message 
+                            };
+                        }
+                        return new ApiResponse<T> { Success = false, ErrorMessage = "Unknown error — response: " + body };
                     }
-                    else if (result != null && result.Error != null)
+                    catch (JsonException jex)
                     {
-                        return new ApiResponse<T> 
-                        { 
-                            Success = false, 
-                            ErrorMessage = result.Error.Message 
-                        };
+                        return new ApiResponse<T> { Success = false, ErrorMessage = jex.Message + " — body: " + body };
                     }
-                    return new ApiResponse<T> { Success = false, ErrorMessage = "Unknown error" };
                 }
                 else
                 {
@@ -109,7 +116,7 @@ namespace wa_client.Services
                     return new ApiResponse<T> 
                     { 
                         Success = false, 
-                        ErrorMessage = error?.Error?.Message ?? $"HTTP {response.StatusCode}" 
+                        ErrorMessage = error?.Error?.Message ?? $"HTTP {response.StatusCode}: {body}" 
                     };
                 }
             }

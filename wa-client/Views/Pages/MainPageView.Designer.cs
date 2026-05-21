@@ -372,15 +372,27 @@ namespace wa_client.Views.Pages
             this.dgvService.AllowUserToDeleteRows = false;
             this.dgvService.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvService.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvService.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
             this.dgvService.Location = new System.Drawing.Point(0, 0);
             this.dgvService.Name = "dgvService";
             this.dgvService.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvService.Size = new System.Drawing.Size(794, 503);
             this.dgvService.TabIndex = 0;
+            this.dgvService.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvService_CellValueChanged);
+            this.dgvService.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvService_KeyDown);
+
+            var colActive = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            colActive.DataPropertyName = "IsActive";
+            colActive.HeaderText = "Active";
+            colActive.Name = "colActive";
+            colActive.Width = 60;
+            colActive.ReadOnly = false;
+            this.dgvService.Columns.Add(colActive);
 
             // 
             // panelServiceFooter
             // 
+            this.panelServiceFooter.Controls.Add(this.btnServiceSave);
             this.panelServiceFooter.Controls.Add(this.btnServiceRefresh);
             this.panelServiceFooter.Controls.Add(this.btnServiceSync);
             this.panelServiceFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -412,6 +424,19 @@ namespace wa_client.Views.Pages
             this.btnServiceSync.Text = "Sync";
             this.btnServiceSync.UseVisualStyleBackColor = true;
             this.btnServiceSync.Click += new System.EventHandler(this.btnServiceSync_Click);
+            // 
+            // btnServiceSave
+            // 
+            this.btnServiceSave = new System.Windows.Forms.Button();
+            this.btnServiceSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnServiceSave.Location = new System.Drawing.Point(600, 10);
+            this.btnServiceSave.Name = "btnServiceSave";
+            this.btnServiceSave.Size = new System.Drawing.Size(75, 23);
+            this.btnServiceSave.TabIndex = 2;
+            this.btnServiceSave.Tag = "9";
+            this.btnServiceSave.Text = "Simpan";
+            this.btnServiceSave.UseVisualStyleBackColor = true;
+            this.btnServiceSave.Click += new System.EventHandler(this.btnServiceSave_Click);
             // 
             // tabMonitor
             // 
@@ -553,5 +578,6 @@ namespace wa_client.Views.Pages
         private System.Windows.Forms.Panel panelServiceFooter;
         private System.Windows.Forms.Button btnServiceRefresh;
         private System.Windows.Forms.Button btnServiceSync;
+        private System.Windows.Forms.Button btnServiceSave;
     }
 }

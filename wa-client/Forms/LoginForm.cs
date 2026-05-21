@@ -29,7 +29,6 @@ namespace wa_client.Forms
 
                 if (response.Success)
                 {
-                    MessageBox.Show("Login successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                     var mainForm = new MainForm();
                     mainForm.ShowDialog();

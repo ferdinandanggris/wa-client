@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.Web.WebView2.Core;
 using wa_client.Models;
 using wa_client.Services;
 using wa_client.Views;
@@ -21,11 +23,23 @@ namespace wa_client.Forms
         public MainForm()
         {
             InitializeComponent();
-            
-            splitContainer.Width = SidebarExpandedWidth;
-            
-            InitializeTreeView();
-            LoadInitialView();
+
+            var isCsRole = AuthService.Instance.CurrentUser?.Role == "cs";
+
+            if (isCsRole)
+            {
+                splitContainer.Visible = false;
+                mainMenu.Visible = false;
+                this.KeyPreview = true;
+                InitializeChatView();
+            }
+            else
+            {
+                splitContainer.Width = SidebarExpandedWidth;
+                InitializeTreeView();
+                LoadInitialView();
+            }
+
             InitializeClock();
         }
 
@@ -33,6 +47,51 @@ namespace wa_client.Forms
         {
             lblDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             timerClock.Start();
+        }
+
+        private async void InitializeChatView()
+        {
+            webViewChat = new Microsoft.Web.WebView2.WinForms.WebView2();
+            webViewChat.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(webViewChat);
+
+            try
+            {
+                var env = await CoreWebView2Environment.CreateAsync(null, null,
+                    new CoreWebView2EnvironmentOptions
+                    {
+                        AdditionalBrowserArguments = "--disable-web-security --disable-features=BlockInsecurePrivateNetworkRequests"
+                    });
+                await webViewChat.EnsureCoreWebView2Async(env);
+
+                var distPath = Path.GetFullPath(Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    @"..\..\..\wa-chat\dist"
+                ));
+                var indexPath = Path.Combine(distPath, "index.html");
+
+                if (File.Exists(indexPath))
+                {
+                    webViewChat.CoreWebView2.SetVirtualHostNameToFolderMapping(
+                        "chat.local",
+                        distPath,
+                        CoreWebView2HostResourceAccessKind.Allow
+                    );
+                    webViewChat.Source = new Uri("https://chat.local/index.html?v=2");
+                }
+                else
+                {
+                    webViewChat.NavigateToString("<html><body><h3>Chat UI not found. Build wa-chat first.</h3></body></html>");
+                }
+            }
+            catch (Exception ex)
+            {
+                webViewChat.NavigateToString($"<html><body><h3>WebView2 init failed: {ex.Message}</h3></body></html>");
+            }
+
+            var userName = AuthService.Instance.CurrentUser?.Name ?? "CS Agent";
+            SetStatus($"Chat - {userName}");
+            this.Text = $"WA Chat - {userName}";
         }
 
         private void timerClock_Tick(object sender, EventArgs e)
@@ -310,11 +369,7 @@ namespace wa_client.Forms
 
             if (result == DialogResult.Yes)
             {
-                AuthService.Instance.Logout();
-                this.Hide();
-                var loginForm = new LoginForm();
-                loginForm.ShowDialog();
-                this.Close();
+                Logout();
             }
         }
 
@@ -330,7 +385,23 @@ namespace wa_client.Forms
                 mainPage.LoadData();
                 return true;
             }
+
+            if (keyData == (Keys.Control | Keys.Shift | Keys.L))
+            {
+                Logout();
+                return true;
+            }
+
             return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void Logout()
+        {
+            AuthService.Instance.Logout();
+            this.Hide();
+            var loginForm = new LoginForm();
+            loginForm.ShowDialog();
+            this.Close();
         }
     }
 

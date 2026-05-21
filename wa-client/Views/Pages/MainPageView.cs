@@ -266,5 +266,50 @@ namespace wa_client.Views.Pages
             LoadServiceData();
         }
 
+        private void dgvService_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+            var phone = dgvService.Rows[e.RowIndex].DataBoundItem as PhoneNumber;
+            if (phone != null)
+            {
+                phone.IsDirty = true;
+                UpdateServiceRowColors();
+            }
+        }
+
+        private void dgvService_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && dgvService.CurrentRow != null)
+            {
+                var phone = dgvService.CurrentRow.DataBoundItem as PhoneNumber;
+                if (phone != null)
+                {
+                    phone.IsDeleted = !phone.IsDeleted;
+                    UpdateServiceRowColors();
+                }
+            }
+        }
+
+        private void btnServiceSave_Click(object sender, EventArgs e)
+        {
+            int updated = 0, deleted = 0;
+            foreach (var phone in _phones.Where(p => p.IsDirty || p.IsDeleted).ToList())
+            {
+                if (phone.IsDeleted)
+                {
+                    var r = ApiClient.Instance.Delete<object>($"/api/v1/phone-numbers/{phone.Id}");
+                    if (r.Success) deleted++; else MessageBox.Show($"Delete failed: {r.ErrorMessage}", "Error");
+                }
+                else if (phone.IsDirty)
+                {
+                    var r = ApiClient.Instance.Put<PhoneNumber>($"/api/v1/phone-numbers/{phone.Id}", new { is_active = phone.IsActive });
+                    if (r.Success) updated++; else MessageBox.Show($"Update failed: {r.ErrorMessage}", "Error");
+                }
+            }
+            LoadServiceData();
+            if (updated > 0 || deleted > 0)
+                MessageBox.Show($"Saved: {updated} updated, {deleted} deleted", "Success");
+        }
+
     }
 }
