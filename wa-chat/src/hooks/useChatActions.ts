@@ -5,6 +5,7 @@ import type { ChatMessage } from '@/types/chat'
 export function useChatActions(
   activeConversation: { id: string; customer_wa_id: string; display_number?: string } | null,
   onMessageSent?: (msg: ChatMessage) => void,
+  onMessageUpdated?: (tempId: string, serverId: string) => void,
   onConversationCreated?: (id: string) => void,
 ) {
   const typingTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -23,15 +24,16 @@ export function useChatActions(
     }
     onMessageSent?.(msg)
     try {
-      await sendMessage({
+      const result = await sendMessage({
         conversation_id: activeConversation.id,
         message_type: 'text',
         content: text,
         sender_name: 'CS Agent',
         context_message_id: replyingTo?.message_id || undefined,
       })
+      if (result?.message_id) onMessageUpdated?.(msg.id, result.message_id)
     } catch { /* handle error */ }
-  }, [activeConversation, onMessageSent])
+  }, [activeConversation, onMessageSent, onMessageUpdated])
 
   const handleSendMedia = useCallback(async (file: File) => {
     if (!activeConversation) return

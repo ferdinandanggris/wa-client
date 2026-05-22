@@ -31,7 +31,7 @@ const ChatSidebar: React.FC<Props> = ({ phones, totalUnread, activePhoneId, setA
         <div key={p.id} className="relative group">
           <Button variant="ghost" size="icon"
             className={`w-12 h-12 rounded-xl transition-all duration-200 ${activePhoneId === p.phone_number ? 'bg-[#00a884] text-white rounded-lg' : 'bg-white text-slate-600 hover:bg-[#00a884] hover:text-white'}`}
-            onClick={() => setActivePhoneId(activePhoneId === p.phone_number ? null : p.phone_number)}
+            onClick={() => setActivePhoneId(activePhoneId === p.id ? null : p.id)}
             title={`${p.verified_name || p.phone_number}${!p.is_active ? ' (inactive)' : ''}`}>
             <span className="text-sm font-bold">{getInitials(p.display_name || p.phone_number)}</span>
           </Button>

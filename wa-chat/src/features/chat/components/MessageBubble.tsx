@@ -16,7 +16,7 @@ interface Props {
 }
 
 const MessageBubble: React.FC<Props> = ({ msg, prevMsg, onReply, onReaction, onResend, conversationName }) => {
-  const isOutbound = msg.direction === 'OUTBOUND';
+  const isOutbound = msg.direction?.toUpperCase() === 'OUTBOUND';
   const isFailed = msg.status === 'failed';
   const ts = msg.message_timestamp ? msg.message_timestamp * 1000 : msg.created_at ? new Date(msg.created_at).getTime() : Date.now();
   const showDateDivider = !prevMsg || !isSameDay(new Date(ts), new Date(

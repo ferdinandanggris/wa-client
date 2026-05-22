@@ -49,11 +49,13 @@ export function useMessages(conversationId: string | null, onUnreadReset?: (id: 
       }
     })
     const unsub2 = wsClient.on('MessageStatusUpdated', (payload: any) => {
-      const msgId = payload?.wa_message_id ?? payload?.message_id
       const status = payload?.status
-      if (msgId && status) {
+      if (status) {
+        const msgId = payload?.wa_message_id ?? payload?.message_id
+        const localId = payload?.id
         setMsgs(prev => prev.map(m =>
-          m.message_id === msgId || m.id === msgId ? { ...m, status } : m
+          (msgId && (m.message_id === msgId || m.id === msgId)) || (localId && m.id === localId)
+            ? { ...m, status } : m
         ))
       }
     })
@@ -89,7 +91,13 @@ export function useMessages(conversationId: string | null, onUnreadReset?: (id: 
     setMsgs(prev => [...prev, normalizeMsg(msg)])
   }, [])
 
-  return { messages: msgs, loading, hasMore, loadMore, reactions, addMessage, load }
+  const updateTempMessage = useCallback((tempId: string, serverId: string) => {
+    setMsgs(prev => prev.map(m =>
+      m.id === tempId ? { ...m, id: serverId, message_id: serverId } : m
+    ))
+  }, [])
+
+  return { messages: msgs, loading, hasMore, loadMore, reactions, addMessage, updateTempMessage, load }
 }
 
 function normalizeMsg(p: any): ChatMessage {
@@ -115,4 +123,4 @@ function normalizeMsg(p: any): ChatMessage {
   }
 }
 
-function onUnreadReset(_id: string) {}
+// function onUnreadReset(_id: string) {}

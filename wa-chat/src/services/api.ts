@@ -16,7 +16,7 @@ export async function getPhoneNumberSummary(): Promise<PhoneNumberSummary[]> {
 }
 
 export async function getConversations(params: {
-  phone_number?: string
+  phone_number_id?: string
   limit?: number
   cursor_id?: string
   cursor_updated_at?: string

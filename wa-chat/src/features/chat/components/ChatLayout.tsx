@@ -25,11 +25,11 @@ const ChatLayout: React.FC = () => {
     loadMore, setSearch, setFilter, markRead, loadPhones,
   } = useConversations(activePhoneId);
 
-  const { messages, loading: msgsLoading, hasMore: msgsHasMore, loadMore: loadMoreMsgs, addMessage } = useMessages(
+  const { messages, loading: msgsLoading, hasMore: msgsHasMore, loadMore: loadMoreMsgs, addMessage, updateTempMessage } = useMessages(
     activeConversation?.id ?? null, markRead
   );
 
-  const { handleSend, handleSendMedia, handleSendReaction, handleEnsureConv } = useChatActions(activeConversation, addMessage);
+  const { handleSend, handleSendMedia, handleSendReaction, handleEnsureConv } = useChatActions(activeConversation, addMessage, updateTempMessage);
 
   useEffect(() => { connect(); }, [connect]);
 

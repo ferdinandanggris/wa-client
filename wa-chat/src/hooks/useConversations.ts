@@ -18,7 +18,7 @@ export function useConversations(activePhoneId: string | null) {
     setLoading(true)
     try {
       const res = await getConversations({
-        phone_number: activePhoneId || undefined,
+        phone_number_id: activePhoneId || undefined,
         limit: 50,
         cursor_id: append ? cursorRef.current.id : undefined,
         cursor_updated_at: append ? cursorRef.current.updatedAt : undefined,
@@ -48,17 +48,17 @@ export function useConversations(activePhoneId: string | null) {
     setConvs(prev => prev.map(c => c.id === id ? { ...c, unread_count: 0 } : c))
   }, [])
 
-  const updateConvInList = useCallback((conv: Conversation) => {
-    setConvs(prev => {
-      const idx = prev.findIndex(c => c.id === conv.id)
-      if (idx >= 0) {
-        const next = [...prev]
-        next[idx] = conv
-        return next
-      }
-      return [conv, ...prev]
-    })
-  }, [])
+const updateConvInList = useCallback((conv: Partial<Conversation>) => {
+  setConvs(prev => {
+    const idx = prev.findIndex(c => c.id === conv.id)
+    if (idx >= 0) {
+      const next = [...prev]
+      next[idx] = { ...next[idx], ...conv }
+      return next
+    }
+    return [conv as Conversation, ...prev]
+  })
+}, [])
 
   const removeConvFromList = useCallback((id: string) => {
     setConvs(prev => prev.filter(c => c.id !== id))
@@ -71,7 +71,8 @@ export function useConversations(activePhoneId: string | null) {
 
   useEffect(() => {
     const unsub1 = wsClient.on('UpdateConversation', (payload: any) => {
-      if (payload?.id) updateConvInList(payload as Conversation)
+      console.log('Received UpdateConversation event', payload)
+      if (payload?.id) updateConvInList(payload)
       loadPhones()
     })
     const unsub2 = wsClient.on('ReceiveMessage', () => load(false))
