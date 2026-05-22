@@ -101,7 +101,7 @@ function normalizeMsg(p: any): ChatMessage {
     message_text: p.content || p.message_text || '',
     content: p.content || '',
     message_type: p.message_type || 'text',
-    direction: p.direction || 'INBOUND',
+    direction: (p.direction || 'INBOUND').toUpperCase(),
     status: p.status || 'pending',
     media_url: p.media_url,
     template_id: p.template_id,
