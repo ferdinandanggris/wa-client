@@ -21,6 +21,9 @@ export function useChatActions(
       status: 'pending',
       created_at: new Date().toISOString(),
       sender_name: 'CS Agent',
+      reply_name: replyingTo ? (replyingTo.sender_name || 'Customer') : undefined,
+      reply_text: replyingTo ? (replyingTo.message_text || replyingTo.content || '') : undefined,
+      context_message_id: replyingTo?.id || undefined,
     }
     onMessageSent?.(msg)
     try {
@@ -29,7 +32,7 @@ export function useChatActions(
         message_type: 'text',
         content: text,
         sender_name: 'CS Agent',
-        context_message_id: replyingTo?.message_id || undefined,
+        context_message_id: replyingTo?.id || undefined,
       })
       if (result?.message_id) onMessageUpdated?.(msg.id, result.message_id)
     } catch { /* handle error */ }

@@ -51,6 +51,7 @@ export interface ChatMessage {
   message_timestamp?: number
   reply_name?: string
   reply_text?: string
+  context_message_id?: string
   reactions?: string[]
   reactionData?: { emojis: string[]; total: number } | null
   error_details?: { code: number; message_local: string; message_original: string; failed_at: string }

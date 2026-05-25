@@ -19,7 +19,10 @@ export function useMessages(conversationId: string | null, onUnreadReset?: (id: 
         limit: 50,
         cursor_id: append ? String(cursorRef.current ?? 0) : undefined,
       })
-      setMsgs(prev => append ? [...res.items, ...prev] : res.items)
+      setMsgs(prev => {
+        const ordered = [...res.items].reverse()
+        return append ? [...ordered, ...prev] : ordered
+      })
       setHasMore(res.has_more)
       if (res.items.length > 0) {
         cursorRef.current = res.next_cursor_id ? parseInt(res.next_cursor_id) : res.items.length
@@ -45,7 +48,16 @@ export function useMessages(conversationId: string | null, onUnreadReset?: (id: 
     if (!conversationId) return
     const unsub1 = wsClient.on('ReceiveMessage', (payload: any) => {
       if (payload?.conversation_id === conversationId) {
-        setMsgs(prev => [...prev, normalizeMsg(payload)])
+        console.log('Received message via WS:', payload)
+        setMsgs(prev => {
+          const idx = prev.findIndex(m => m.id === payload.id || m.message_id === payload.message_id)
+          if (idx >= 0) {
+            const next = [...prev]
+            next[idx] = normalizeMsg(payload)
+            return next
+          }
+          return [...prev, normalizeMsg(payload)]
+        })
       }
     })
     const unsub2 = wsClient.on('MessageStatusUpdated', (payload: any) => {
@@ -53,10 +65,13 @@ export function useMessages(conversationId: string | null, onUnreadReset?: (id: 
       if (status) {
         const msgId = payload?.wa_message_id ?? payload?.message_id
         const localId = payload?.id
-        setMsgs(prev => prev.map(m =>
-          (msgId && (m.message_id === msgId || m.id === msgId)) || (localId && m.id === localId)
-            ? { ...m, status } : m
-        ))
+        setMsgs(prev => prev.map(m => {
+          if ((msgId && (m.message_id === msgId || m.id === msgId)) || (localId && m.id === localId)) {
+            const updated = normalizeMsg(payload)
+            return { ...m, ...updated, id: m.id, reply_name: updated.reply_name || m.reply_name, reply_text: updated.reply_text || m.reply_text }
+          }
+          return m
+        }))
       }
     })
     const unsub3 = wsClient.on('MessageStatusFailed', (payload: any) => {
@@ -120,6 +135,9 @@ function normalizeMsg(p: any): ChatMessage {
     message_timestamp: p.message_timestamp || p.sent_at ? Math.floor(new Date(p.sent_at || p.created_at).getTime() / 1000) : undefined,
     reactionData: p.reactionData || null,
     error_message: p.error_message,
+    reply_name: p.reply_name,
+    reply_text: p.reply_text,
+    context_message_id: p.context_message_id,
   }
 }
 

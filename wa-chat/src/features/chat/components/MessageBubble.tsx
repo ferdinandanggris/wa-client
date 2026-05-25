@@ -35,7 +35,7 @@ const MessageBubble: React.FC<Props> = ({ msg, prevMsg, onReply, onReaction, onR
   };
 
   return (
-    <div className="flex flex-col mb-1 group/bubble">
+    <div id={`msg-${msg.id}`} className="flex flex-col mb-1 group/bubble">
       {showDateDivider && (
         <div className="flex justify-center my-6 sticky top-2 z-10">
           <span className="bg-slate-100/80 backdrop-blur-sm text-slate-500 text-[10px] uppercase tracking-wider font-bold px-3 py-1 rounded-full shadow-sm border border-slate-200/50">{formatDividerDate(msg.created_at, msg.message_timestamp)}</span>
@@ -58,7 +58,26 @@ const MessageBubble: React.FC<Props> = ({ msg, prevMsg, onReply, onReaction, onR
                 <p className="text-sm mt-1">{msg.message_text || msg.content}</p>
               </div>
             ) : (
-              <p className="text-sm whitespace-pre-wrap break-words">{msg.message_text || msg.content}</p>
+              <div>
+                {msg.reply_name && msg.reply_text && (
+                  <div
+                    className="mb-2 p-2 bg-black/5 hover:bg-black/10 rounded-lg border-l-4 border-indigo-500/50 cursor-pointer transition-colors group/quote"
+                    onClick={() => {
+                      const el = document.getElementById(`msg-${msg.context_message_id}`);
+                      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      el?.classList.add('animate-pulse-glow');
+                      setTimeout(() => el?.classList.remove('animate-pulse-glow'), 2000);
+                    }}
+                  >
+                    <div className="flex items-center gap-1.5 mb-0.5">
+                      <div className="w-0.5 h-3 bg-indigo-500/50 rounded-full" />
+                      <span className="text-[10px] font-bold text-indigo-600/70 uppercase tracking-widest">{msg.reply_name || 'Whatsapp User'}</span>
+                    </div>
+                    <p className="text-[11px] opacity-60 truncate">{msg.reply_text || 'Quoted message'}</p>
+                  </div>
+                )}
+                <p className="text-sm whitespace-pre-wrap break-words">{msg.message_text || msg.content}</p>
+              </div>
             )}
             <div className={cn("flex items-center gap-1.5 mt-1", isOutbound ? "justify-end" : "justify-start")}>
               <span className={cn("text-[9px] font-medium tracking-tight opacity-70", isOutbound ? "text-indigo-100" : "text-slate-400")}>{formatTime(msg.created_at, msg.message_timestamp)}</span>
